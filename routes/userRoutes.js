@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User } = require('../models');
+const { User, Note } = require('../models');
 
 router.route('/')
     .get(async (req, res, next) => {
@@ -81,6 +81,11 @@ router.route('/:username')
             if (!user) {
                 return res.status(404).send({ err: 'User not found' });
             }
+
+            await Note.deleteMany({ authorId: user._id }).catch((err) => {
+                return res.status(500).send({ err: 'An erroor occurred while deleting user notes' });
+            });
+
             return res.json({ success: true });
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while deleting user' });

@@ -18,8 +18,7 @@ router.route('/')
         }
 
         const newNote = new Note({
-            //? req.body.id temporarily until authentication is implemented, use req.user.id after that
-            author: req.body.id,
+            authorId: req.body.authorId,
             title: req.body.title,
             body: req.body.body
         })
