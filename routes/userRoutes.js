@@ -13,12 +13,12 @@ router.route('/')
         }
     })
     .post(async (req, res, next) => {
-        if(!req.body.username || !req.body.password) {
+        if (!req.body.username || !req.body.password) {
             return res.status(422).json({ err: 'No username or password provided' });
         }
 
         const userExists = await User.findOne({ username: req.body.username });
-        if(userExists) {
+        if (userExists) {
             return res.status(500).json({ err: 'User already exists' });
         }
 
@@ -49,7 +49,7 @@ router.route('/:username')
         }
     })
     .patch(async (req, res, next) => {
-        if(!req.body.password) {
+        if (!req.body.password) {
             return res.status(422).json({ err: 'No password provided' });
         }
 

@@ -13,11 +13,13 @@ router.route('/')
         }
     })
     .post(async (req, res, next) => {
-        if(!req.body.title || !req.body.body) {
+        if (!req.body.title || !req.body.body) {
             return res.status(422).json({ err: 'No title and body provided' });
         }
 
         const newNote = new Note({
+            //? req.body.id temporarily until authentication is implemented, use req.user.id after that
+            author: req.body.id,
             title: req.body.title,
             body: req.body.body
         })
@@ -43,7 +45,7 @@ router.route('/:id')
         }
     })
     .patch(async (req, res, next) => {
-        if(!req.body.title && !req.body.body) {
+        if (!req.body.title && !req.body.body) {
             return res.status(422).json({ err: 'Either a title or a body needs to be provided' });
         }
 
@@ -52,7 +54,7 @@ router.route('/:id')
             if (!note) {
                 return res.status(404).send({ err: 'Note not found' });
             }
-            
+
             if ((req.body.title == note.title && req.body.body == null) ||
                 (req.body.body == note.body && req.body.title == null) ||
                 (req.body.body == note.body && req.body.title == note.title)) {
