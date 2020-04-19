@@ -59,8 +59,7 @@ router.route('/:username')
                 return res.status(404).send({ err: 'User not found' });
             }
 
-            //? replace with compare pass function ones hashing is implemented
-            if (req.body.password == user.password) {
+            if (await user.comparePassword(req.body.password)) {
                 return res.status(422).send({ err: 'This is already your current password' });
             }
 
