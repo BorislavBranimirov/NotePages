@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', async function (next) {
     try {
+        // if user is being saved but password remains unchanged don't hash again
         if (!this.isModified('password')) {
             return next();
         }

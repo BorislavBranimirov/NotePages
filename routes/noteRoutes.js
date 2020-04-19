@@ -13,10 +13,13 @@ router.route('/')
         }
     })
     .post(async (req, res, next) => {
+        // both title and body need to be provided
         if (!req.body.title || !req.body.body) {
             return res.status(422).json({ err: 'No title and body provided' });
         }
 
+        // construct new note record
+        //? change req.body.authorId to req.user.id after authentication is implemented
         const newNote = new Note({
             authorId: req.body.authorId,
             title: req.body.title,
@@ -44,6 +47,7 @@ router.route('/:id')
         }
     })
     .patch(async (req, res, next) => {
+        // either a title or a body needs to be provided
         if (!req.body.title && !req.body.body) {
             return res.status(422).json({ err: 'Either a title or a body needs to be provided' });
         }
@@ -54,6 +58,8 @@ router.route('/:id')
                 return res.status(404).send({ err: 'Note not found' });
             }
 
+            // if title and body are the same or if one is the same and the other is not provided
+            // don't update the record
             if ((req.body.title == note.title && req.body.body == null) ||
                 (req.body.body == note.body && req.body.title == null) ||
                 (req.body.body == note.body && req.body.title == note.title)) {

@@ -13,6 +13,7 @@ router.route('/')
         }
     })
     .post(async (req, res, next) => {
+        // both username and password need to be provided
         if (!req.body.username || !req.body.password) {
             return res.status(422).json({ err: 'No username or password provided' });
         }
@@ -22,6 +23,7 @@ router.route('/')
             return res.status(500).json({ err: 'User already exists' });
         }
 
+        // construct new user record
         const newUser = new User({
             username: req.body.username,
             password: req.body.password
@@ -49,6 +51,7 @@ router.route('/:username')
         }
     })
     .patch(async (req, res, next) => {
+        // password needs to be provided
         if (!req.body.password) {
             return res.status(422).json({ err: 'No password provided' });
         }
@@ -59,6 +62,7 @@ router.route('/:username')
                 return res.status(404).send({ err: 'User not found' });
             }
 
+            // use user's comparePassword method to check if new password matches the current one
             if (await user.comparePassword(req.body.password)) {
                 return res.status(422).send({ err: 'This is already your current password' });
             }
@@ -82,6 +86,7 @@ router.route('/:username')
                 return res.status(404).send({ err: 'User not found' });
             }
 
+            // delete all note record with the author's id
             await Note.deleteMany({ authorId: user._id }).catch((err) => {
                 return res.status(500).send({ err: 'An erroor occurred while deleting user notes' });
             });
