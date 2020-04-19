@@ -17,6 +17,11 @@ router.route('/')
             return res.status(422).json({ err: 'No username or password provided' });
         }
 
+        const userExists = await User.findOne({ username: req.body.username });
+        if(userExists) {
+            return res.status(500).json({ err: 'User already exists' });
+        }
+
         const newUser = new User({
             username: req.body.username,
             password: req.body.password
