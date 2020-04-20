@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // set up mongoose
-const db = process.env.mongoURI;
+const db = process.env.MONGO_URI;
 mongoose.connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true,
