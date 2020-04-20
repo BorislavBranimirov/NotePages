@@ -22,9 +22,10 @@ mongoose.connect(db, {
     .catch((err) => console.log(err));
 
 // routing
-const { noteRouter, userRouter } = require('./routes');
+const { noteRouter, userRouter, authRouter } = require('./routes');
 app.use('/api/notes', noteRouter);
 app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 // serving react app
 if (process.env.NODE_ENV === 'production') {
