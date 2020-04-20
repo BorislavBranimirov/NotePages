@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const { verifyAccessToken } = require('../controllers/authController');
 const { Note } = require('../models');
 
 router.route('/')
@@ -12,21 +13,20 @@ router.route('/')
             return res.status(500).send({ err: 'An error occurred while searching for notes' });
         }
     })
-    .post(async (req, res, next) => {
+    .post(verifyAccessToken, async (req, res, next) => {
         // both title and body need to be provided
         if (!req.body.title || !req.body.body) {
             return res.status(422).json({ err: 'No title and body provided' });
         }
 
-        // construct new note record
-        //? change req.body.authorId to req.user.id after authentication is implemented
-        const newNote = new Note({
-            authorId: req.body.authorId,
-            title: req.body.title,
-            body: req.body.body
-        })
-
         try {
+            // construct new note record
+            const newNote = new Note({
+                authorId: res.locals.user.id,
+                title: req.body.title,
+                body: req.body.body
+            })
+
             const note = await newNote.save();
             return res.json({
                 success: true,
@@ -46,7 +46,7 @@ router.route('/:id')
             return res.status(500).send({ err: 'An error occurred while searching for note' });
         }
     })
-    .patch(async (req, res, next) => {
+    .patch(verifyAccessToken, async (req, res, next) => {
         // either a title or a body needs to be provided
         if (!req.body.title && !req.body.body) {
             return res.status(422).json({ err: 'Either a title or a body needs to be provided' });
@@ -56,6 +56,10 @@ router.route('/:id')
             const note = await Note.findById(req.params.id);
             if (!note) {
                 return res.status(404).send({ err: 'Note not found' });
+            }
+
+            if (note.authorId.toString() !== res.locals.user.id) {
+                return res.status(401).json({ err: "Unauthorized to edit this note" });
             }
 
             // if title and body are the same or if one is the same and the other is not provided
