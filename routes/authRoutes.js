@@ -25,7 +25,7 @@ router.route('/login')
             const accessToken = await jwt.sign({
                 id: user._id,
                 username: user.username
-            }, process.env.AUTH_SECRET, { expiresIn: 60 });
+            }, process.env.AUTH_SECRET, { expiresIn: '15m' });
 
             return res.json({
                 accessToken: accessToken
