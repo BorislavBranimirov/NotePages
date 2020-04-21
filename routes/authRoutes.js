@@ -25,13 +25,62 @@ router.route('/login')
             const accessToken = await jwt.sign({
                 id: user._id,
                 username: user.username
-            }, process.env.AUTH_SECRET, { expiresIn: '15m' });
+            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            
+            const refreshToken = await jwt.sign({
+                id: user._id,
+                username: user.username
+            }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
 
             return res.json({
-                accessToken: accessToken
+                accessToken: accessToken,
+                refreshToken: refreshToken
             });
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while trying to log in' });
+        }
+    });
+
+router.route('/refresh-token')
+    .post(async (req, res, next) => {
+        // refresh token should be supplied in an Authorization header with a Bearer schema
+        if (req.headers['authorization'] === undefined ||
+            req.headers['authorization'].split(' ')[0] !== 'Bearer') {
+            return res.status(401).json({ err: "No refresh token provided" });
+        }
+
+        const refreshToken = req.headers['authorization'].split(' ')[1];
+
+        try {
+            // keep in mind that verify isn't asynchronous
+            // https://github.com/auth0/node-jsonwebtoken/issues/111
+            const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+            const user = await User.findOne({ username: payload.username });
+            if (!user) {
+                return res.status(422).json({ err: 'User doesn\'t exist' });
+            }
+
+            const newAccessToken = await jwt.sign({
+                id: user._id,
+                username: user.username
+            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+
+            const newRefreshToken = await jwt.sign({
+                id: user._id,
+                username: user.username
+            }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
+
+            return res.json({
+                accessToken: newAccessToken,
+                refreshToken: newRefreshToken
+            });
+        } catch (err) {
+            // if refresh token is expired send a 401, the user should log in again to receive a new one
+            if(err instanceof jwt.TokenExpiredError) {
+                return res.status(401).json({ err: "Unauthorized" });
+            }
+            return res.status(500).json({ err: "An error occurred while refreshing token" });
         }
     });
 

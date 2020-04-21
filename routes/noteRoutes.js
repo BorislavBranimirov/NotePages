@@ -64,8 +64,9 @@ router.route('/:id')
 
             // if title and body are the same or if one is the same and the other is not provided
             // don't update the record
-            if ((req.body.title === note.title && req.body.body === null) ||
-                (req.body.body === note.body && req.body.title === null) ||
+            console.log(req.body.body)
+            if ((req.body.title === note.title && !req.body.body) ||
+                (req.body.body === note.body && !req.body.title) ||
                 (req.body.body === note.body && req.body.title === note.title)) {
                 return res.status(422).send({ err: 'No changes from original note were provided' });
             }

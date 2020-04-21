@@ -12,7 +12,7 @@ exports.verifyAccessToken = (req, res, next) => {
     try {
         // keep in mind that verify isn't asynchronous
         // https://github.com/auth0/node-jsonwebtoken/issues/111
-        const payload = jwt.verify(accessToken, process.env.AUTH_SECRET)
+        const payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
         // attach the user info to the response object for use in further middleware
         res.locals.user = {
