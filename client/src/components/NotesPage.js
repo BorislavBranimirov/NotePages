@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
@@ -32,7 +33,8 @@ const NotesPage = (props) => {
 
     const noteListItems = notes.map((note) =>
         <li key={note._id}>
-            <h3>{note.title}</h3>
+            <Link to={'/notes/' + note._id}><h3>{note.title}</h3></Link>
+            <p>{note.createdAt}</p>
             <p>{note.body}</p>
         </li>
     );

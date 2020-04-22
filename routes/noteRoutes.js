@@ -38,9 +38,13 @@ router.route('/')
     });
 
 router.route('/:id')
-    .get(async (req, res, next) => {
+    .get(verifyAccessToken, async (req, res, next) => {
         try {
-            const note = await Note.findById(req.params.id);
+            const note = await Note.findOne({
+                _id: req.params.id,
+                authorId: res.locals.user.id
+            });
+            
             return res.json(note);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for note' });
