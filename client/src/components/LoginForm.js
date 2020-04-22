@@ -36,9 +36,9 @@ const LoginForm = (props) => {
             return setErrorMessage(resJSON.err);
         }
 
-        //? remove log after configuring refresh token properly
-        console.log(resJSON);
+        // save the access token in local storage
         localStorage.setItem('accessToken', resJSON.accessToken);
+        props.history.push('/');
     };
 
     return (
@@ -46,9 +46,25 @@ const LoginForm = (props) => {
             <div className="error">{errorMessage}</div>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
-                <input type="text" name="username" value={username} onChange={handleChange} />
+                <input
+                    type="text"
+                    name="username"
+                    pattern="[a-zA-Z0-9]{6,25}"
+                    title="Minimum of 6 characters, no spaces or special symbols"
+                    value={username}
+                    onChange={handleChange}
+                    required
+                />
                 <label htmlFor="password">Password:</label>
-                <input type="password" name="password" value={password} onChange={handleChange} />
+                <input
+                    type="password"
+                    name="password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
+                    title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
+                    value={password}
+                    onChange={handleChange}
+                    required
+                />
                 <input type="submit" value="Submit" />
             </form>
         </div>

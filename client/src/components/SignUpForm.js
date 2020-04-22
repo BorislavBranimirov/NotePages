@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 const SignUpForm = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (event) => {
@@ -14,11 +15,18 @@ const SignUpForm = (props) => {
             case 'password':
                 setPassword(event.target.value);
                 break;
+            case 'confirmPassword':
+                setConfirmPassword(event.target.value);
+                break;
         }
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if(password!==confirmPassword) {
+            return setErrorMessage('Passwords must be the same');
+        }
 
         const res = await fetch('/api/users', {
             method: 'POST',
@@ -37,8 +45,6 @@ const SignUpForm = (props) => {
             return setErrorMessage(resJSON.err);
         }
 
-        //? remove log after configuring user authentication
-        console.log(resJSON);
         props.history.push('/login');
     };
 
@@ -47,9 +53,35 @@ const SignUpForm = (props) => {
             <div className="error">{errorMessage}</div>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
-                <input type="text" name="username" value={username} onChange={handleChange} />
+                <input
+                    type="text"
+                    name="username"
+                    pattern="[a-zA-Z0-9]{6,25}"
+                    title="Minimum of 6 characters, no spaces or special symbols"
+                    value={username}
+                    onChange={handleChange}
+                    required
+                />
                 <label htmlFor="password">Password:</label>
-                <input type="password" name="password" value={password} onChange={handleChange} />
+                <input
+                    type="password"
+                    name="password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
+                    title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
+                    value={password}
+                    onChange={handleChange}
+                    required
+                />
+                <label htmlFor="confirmPassword">Confirm password:</label>
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
+                    title="Minimum of 8 characters, one lowercase letter, one uppercase letter and a digit"
+                    value={confirmPassword}
+                    onChange={handleChange}
+                    required
+                />
                 <input type="submit" value="Submit" />
             </form>
         </div>
