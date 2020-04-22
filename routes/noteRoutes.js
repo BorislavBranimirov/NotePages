@@ -5,9 +5,9 @@ const { verifyAccessToken } = require('../controllers/authController');
 const { Note } = require('../models');
 
 router.route('/')
-    .get(async (req, res, next) => {
+    .get(verifyAccessToken, async (req, res, next) => {
         try {
-            const notes = await Note.find();
+            const notes = await Note.find({ authorId: res.locals.user.id });
             return res.json(notes);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for notes' });
@@ -64,7 +64,6 @@ router.route('/:id')
 
             // if title and body are the same or if one is the same and the other is not provided
             // don't update the record
-            console.log(req.body.body)
             if ((req.body.title === note.title && !req.body.body) ||
                 (req.body.body === note.body && !req.body.title) ||
                 (req.body.body === note.body && req.body.title === note.title)) {
