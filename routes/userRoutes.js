@@ -34,7 +34,7 @@ router.route('/')
             const newUser = new User({
                 username: req.body.username,
                 password: req.body.password
-            })
+            });
 
             const user = await newUser.save();
             return res.json({
