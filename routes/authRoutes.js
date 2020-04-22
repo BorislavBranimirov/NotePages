@@ -26,15 +26,22 @@ router.route('/login')
                 id: user._id,
                 username: user.username
             }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-            
+
             const refreshToken = await jwt.sign({
                 id: user._id,
                 username: user.username
             }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
 
+            // 604800000 - one week
+            // req.baseUrl - currently /api/auth
+            res.cookie('refreshToken', refreshToken, {
+                expires: new Date(Date.now() + 604800000),
+                path: req.baseUrl + '/refresh-token',
+                httpOnly: true
+            });
+
             return res.json({
-                accessToken: accessToken,
-                refreshToken: refreshToken
+                accessToken: accessToken
             });
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while trying to log in' });
@@ -43,13 +50,12 @@ router.route('/login')
 
 router.route('/refresh-token')
     .post(async (req, res, next) => {
-        // refresh token should be supplied in an Authorization header with a Bearer schema
-        if (req.headers['authorization'] === undefined ||
-            req.headers['authorization'].split(' ')[0] !== 'Bearer') {
+        // refresh token should be supplied in a cookie
+        if (req.cookies.refreshToken === undefined) {
             return res.status(401).json({ err: "No refresh token provided" });
         }
 
-        const refreshToken = req.headers['authorization'].split(' ')[1];
+        const refreshToken = req.cookies.refreshToken;
 
         try {
             // keep in mind that verify isn't asynchronous
@@ -71,13 +77,20 @@ router.route('/refresh-token')
                 username: user.username
             }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
 
+            // 604800000 - one week
+            // req.baseUrl - currently /api/auth
+            res.cookie('refreshToken', newRefreshToken, {
+                expires: new Date(Date.now() + 604800000),
+                path: req.baseUrl + '/refresh-token',
+                httpOnly: true
+            });
+
             return res.json({
-                accessToken: newAccessToken,
-                refreshToken: newRefreshToken
+                accessToken: newAccessToken
             });
         } catch (err) {
             // if refresh token is expired send a 401, the user should log in again to receive a new one
-            if(err instanceof jwt.TokenExpiredError) {
+            if (err instanceof jwt.TokenExpiredError) {
                 return res.status(401).json({ err: "Unauthorized" });
             }
             return res.status(500).json({ err: "An error occurred while refreshing token" });

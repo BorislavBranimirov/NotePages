@@ -1,15 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // .env
-require('dotenv').config()
+require('dotenv').config();
 
 // body-parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// cookie-parser
+app.use(cookieParser());
 
 // set up mongoose
 const db = process.env.MONGO_URI;
