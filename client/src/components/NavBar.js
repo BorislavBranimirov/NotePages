@@ -5,6 +5,7 @@ const NavBar = (props) => {
     return (
         <nav className="navbar">
             <Link to={'/'}>Home</Link>
+            <Link to={'/notes'}>Notes</Link>
             <Link to={'/login'}>Login</Link>
             <Link to={'/signup'}>Sign up</Link>
         </nav>
