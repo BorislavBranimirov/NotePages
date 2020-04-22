@@ -14,7 +14,7 @@ router.route('/login')
         const usernamePattern = /^[a-zA-Z0-9]{6,25}$/;
         const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}$/;
         if (!usernamePattern.test(req.body.username) || !passwordPattern.test(req.body.password)) {
-            return res.status(422).json({err: 'Invalid username or password'});
+            return res.status(422).json({ err: 'Invalid username or password' });
         }
 
         try {
@@ -101,6 +101,15 @@ router.route('/refresh-token')
             }
             return res.status(500).json({ err: "An error occurred while refreshing token" });
         }
+    });
+
+router.route('/logout')
+    .post(async (req, res, next) => {
+        res.clearCookie('refreshToken', {
+            path: req.baseUrl + '/refresh-token',
+            httpOnly: true
+        });
+        res.json({ 'success': true });
     });
 
 module.exports = router;
