@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
+const authUtils = require('../utils/authUtils');
 
 router.route('/login')
     .post(async (req, res, next) => {
@@ -28,23 +29,11 @@ router.route('/login')
                 return res.status(422).json({ err: 'Wrong username or password' });
             }
 
-            const accessToken = await jwt.sign({
-                id: user._id,
-                username: user.username
-            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            const accessToken = await authUtils.createAccessToken(user);
 
-            const refreshToken = await jwt.sign({
-                id: user._id,
-                username: user.username
-            }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
+            const refreshToken = await authUtils.createRefreshToken(user);
 
-            // 604800000 - one week
-            // req.baseUrl - currently /api/auth
-            res.cookie('refreshToken', refreshToken, {
-                expires: new Date(Date.now() + 604800000),
-                path: req.baseUrl + '/refresh-token',
-                httpOnly: true
-            });
+            authUtils.addRefreshCookie(req, res, refreshToken);
 
             return res.json({
                 accessToken: accessToken
@@ -73,23 +62,11 @@ router.route('/refresh-token')
                 return res.status(422).json({ err: 'User doesn\'t exist' });
             }
 
-            const newAccessToken = await jwt.sign({
-                id: user._id,
-                username: user.username
-            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            const newAccessToken = await authUtils.createAccessToken(user);
 
-            const newRefreshToken = await jwt.sign({
-                id: user._id,
-                username: user.username
-            }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1w' });
+            const newRefreshToken = await authUtils.createRefreshToken(user);
 
-            // 604800000 - one week
-            // req.baseUrl - currently /api/auth
-            res.cookie('refreshToken', newRefreshToken, {
-                expires: new Date(Date.now() + 604800000),
-                path: req.baseUrl + '/refresh-token',
-                httpOnly: true
-            });
+            authUtils.addRefreshCookie(req, res, newRefreshToken);
 
             return res.json({
                 accessToken: newAccessToken
@@ -105,10 +82,7 @@ router.route('/refresh-token')
 
 router.route('/logout')
     .post(async (req, res, next) => {
-        res.clearCookie('refreshToken', {
-            path: req.baseUrl + '/refresh-token',
-            httpOnly: true
-        });
+        authUtils.clearRefreshCookie(req, res);
         res.json({ 'success': true });
     });
 
