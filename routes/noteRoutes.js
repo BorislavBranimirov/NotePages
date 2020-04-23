@@ -44,7 +44,7 @@ router.route('/:id')
                 _id: req.params.id,
                 authorId: res.locals.user.id
             });
-            
+
             return res.json(note);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for note' });
@@ -86,12 +86,16 @@ router.route('/:id')
             return res.status(500).send({ err: 'An error occurred while updating note' });
         }
     })
-    .delete(async (req, res, next) => {
+    .delete(verifyAccessToken, async (req, res, next) => {
         try {
             const note = await Note.findByIdAndDelete(req.params.id);
             if (!note) {
                 return res.status(404).send({ err: 'Note not found' });
             }
+            if (note.authorId.toString() !== res.locals.user.id) {
+                return res.status(401).json({ err: "Unauthorized to delete this note" });
+            }
+
             return res.json({ success: true });
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while deleting note' });
