@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
+import { checkTokenExpiry } from '../../utils/authUtils';
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
@@ -9,6 +10,11 @@ const NotePage = (props) => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
+                const expired = await checkTokenExpiry();
+                if (expired) {
+                    return props.history.push('/login');
+                }
+
                 const res = await fetch('/api/notes/' + props.match.params.id, {
                     method: 'GET',
                     headers: {
@@ -19,7 +25,7 @@ const NotePage = (props) => {
 
                 const item = await res.json();
                 //check if an item was found
-                if(!item) {
+                if (!item) {
                     return;
                 }
                 // check if an error was returned
@@ -38,7 +44,7 @@ const NotePage = (props) => {
 
     return (
         <div className="note-page">
-            <Link to={'/notes/'+props.match.params.id+'/edit'}>Edit</Link>
+            <Link to={'/notes/' + props.match.params.id + '/edit'}>Edit</Link>
             <DeleteNoteBtn deleteId={props.match.params.id} />
             <div className="error">{errorMessage}</div>
             {note &&

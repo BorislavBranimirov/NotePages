@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { checkTokenExpiry } from '../../utils/authUtils';
 
 const CreateNotePage = (props) => {
     const [title, setTitle] = useState('');
@@ -18,6 +19,11 @@ const CreateNotePage = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        const expired = await checkTokenExpiry();
+        if(expired) {
+            return props.history.push('/login');
+        }
 
         const res = await fetch('/api/notes', {
             method: 'POST',

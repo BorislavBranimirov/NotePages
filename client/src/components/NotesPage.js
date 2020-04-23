@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
+import { checkTokenExpiry } from '../../utils/authUtils';
+
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -8,6 +10,11 @@ const NotesPage = (props) => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
+                const expired = await checkTokenExpiry();
+                if (expired) {
+                    return props.history.push('/login');
+                }
+
                 const res = await fetch('/api/notes', {
                     method: 'GET',
                     headers: {

@@ -1,11 +1,9 @@
 import React from 'react';
+import { logout } from '../../utils/authUtils';
 
 const Logout = (props) => {
     const handleClick = (event) => {
-        localStorage.removeItem('accessToken');
-        fetch('/api/auth/logout', {
-            method: 'POST'
-        });
+        logout();
     };
 
     return (

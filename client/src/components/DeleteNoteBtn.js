@@ -1,10 +1,16 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import { checkTokenExpiry } from '../../utils/authUtils';
 
 const DeleteNoteBtn = (props) => {
     let history = useHistory();
 
     const handleClick = async (event) => {
+        const expired = await checkTokenExpiry();
+        if(expired) {
+            return history.push('/login');
+        }
+
         const res = await fetch('/api/notes/' + props.deleteId, {
             method: 'DELETE',
             headers: {

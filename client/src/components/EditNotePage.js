@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { checkTokenExpiry } from '../../utils/authUtils';
 
 const EditNotePage = (props) => {
     const [title, setTitle] = useState('');
@@ -8,6 +9,11 @@ const EditNotePage = (props) => {
     useEffect(() => {
         const fetchNote = async () => {
             try {
+                const expired = await checkTokenExpiry();
+                if (expired) {
+                    return props.history.push('/login');
+                }
+
                 const res = await fetch('/api/notes/' + props.match.params.id, {
                     method: 'GET',
                     headers: {
@@ -18,7 +24,7 @@ const EditNotePage = (props) => {
 
                 const item = await res.json();
                 //check if an item was found
-                if(!item) {
+                if (!item) {
                     return setErrorMessage('Note doesn\'t exist');
                 }
                 // check if an error was returned
