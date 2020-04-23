@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import DeleteNoteBtn from './DeleteNoteBtn';
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -35,6 +35,7 @@ const NotesPage = (props) => {
         <li key={note._id}>
             <Link to={'/notes/' + note._id}><h3>{note.title}</h3></Link>
             <p>{note.createdAt}</p>
+            <DeleteNoteBtn deleteId={note._id} />
             <p>{note.body}</p>
         </li>
     );
