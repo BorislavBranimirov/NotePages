@@ -40,10 +40,12 @@ router.route('/')
 router.route('/:id')
     .get(verifyAccessToken, async (req, res, next) => {
         try {
-            const note = await Note.findOne({
-                _id: req.params.id,
-                authorId: res.locals.user.id
-            });
+            const note = await Note.findById(req.params.id);
+            if(note) {
+                if (note.authorId.toString() !== res.locals.user.id) {
+                    return res.status(401).json({ err: "Unauthorized to view this note" });
+                }
+            }
 
             return res.json(note);
         } catch (err) {
