@@ -4,6 +4,7 @@ const router = express.Router();
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const authUtils = require('../utils/authUtils');
+const userUtils = require('../utils/userUtils');
 
 router.route('/login')
     .post(async (req, res, next) => {
@@ -12,10 +13,11 @@ router.route('/login')
             return res.status(422).json({ err: 'No username or password provided' });
         }
 
-        const usernamePattern = /^[a-zA-Z0-9]{6,25}$/;
-        const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}$/;
-        if (!usernamePattern.test(req.body.username) || !passwordPattern.test(req.body.password)) {
-            return res.status(422).json({ err: 'Invalid username or password' });
+        if(!userUtils.usernamePatternTest(req.body.username)) {
+            return res.status(422).json({err: 'Invalid username'});
+        }
+        if(!userUtils.passwordPatternTest(req.body.password)) {
+            return res.status(422).json({err: 'Invalid password'});
         }
 
         try {
