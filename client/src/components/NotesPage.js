@@ -19,7 +19,7 @@ const NotesPage = (props) => {
                 const items = await res.json();
                 // check if an error was returned
                 if (items.err) {
-                    return setErrorMessage(item.err);
+                    return setErrorMessage(items.err);
                 }
 
                 setNotes(items);

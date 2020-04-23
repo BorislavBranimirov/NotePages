@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
@@ -36,6 +37,7 @@ const NotePage = (props) => {
 
     return (
         <div className="note-page">
+            <Link to={'/notes/'+props.match.params.id+'/edit'}>Edit</Link>
             <div className="error">{errorMessage}</div>
             {note &&
                 <div className="note-wrapper">
