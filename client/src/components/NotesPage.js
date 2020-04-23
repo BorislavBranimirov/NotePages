@@ -41,6 +41,7 @@ const NotesPage = (props) => {
 
     return (
         <div className="notes-container">
+            <Link to="create-note">Create a new note</Link>
             <div className="error">{errorMessage}</div>
             <ul>{noteListItems}</ul>
         </div>

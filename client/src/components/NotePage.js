@@ -36,7 +36,7 @@ const NotePage = (props) => {
 
     return (
         <div className="note-page">
-            <div>{errorMessage}</div>
+            <div className="error">{errorMessage}</div>
             {note &&
                 <div className="note-wrapper">
                     <h2>{note.title}</h2>
