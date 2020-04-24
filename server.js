@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -14,6 +15,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // cookie-parser
 app.use(cookieParser());
+
+// morgan
+app.use(morgan('tiny'));
 
 // set up mongoose
 const db = process.env.MONGO_URI;
