@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
 
 const EditNotePage = (props) => {
@@ -98,6 +99,7 @@ const EditNotePage = (props) => {
                 />
                 <input type="submit" value="Save" />
             </form>
+            <Link to={'/notes/'+props.match.params.id}>Cancel</Link>
         </div>
     );
 };

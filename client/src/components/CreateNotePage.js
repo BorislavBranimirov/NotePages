@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
 
 const CreateNotePage = (props) => {
@@ -66,6 +67,7 @@ const CreateNotePage = (props) => {
                     required
                 />
                 <input type="submit" value="Create"/>
+                <Link to="notes">Cancel</Link>
             </form>
         </div>
     );
