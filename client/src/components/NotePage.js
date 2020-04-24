@@ -5,6 +5,7 @@ import { checkTokenExpiry } from '../../utils/authUtils';
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
+    const [loaded, setLoaded] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -26,14 +27,17 @@ const NotePage = (props) => {
                 const item = await res.json();
                 //check if an item was found
                 if (!item) {
-                    return;
+                    setErrorMessage('Note not found');
+                    return setLoaded(true);
                 }
                 // check if an error was returned
                 if (item.err) {
-                    return setErrorMessage(item.err);
+                    setErrorMessage(item.err);
+                    return setLoaded(true);
                 }
 
                 setNote(item);
+                setLoaded(true);
             } catch (err) {
                 setErrorMessage('Error occured while loading note');
             }
@@ -46,13 +50,20 @@ const NotePage = (props) => {
         <div className="note-page">
             <Link to={'/notes/' + props.match.params.id + '/edit'}>Edit</Link>
             <DeleteNoteBtn deleteId={props.match.params.id} />
-            <div className="error">{errorMessage}</div>
-            {note &&
-                <div className="note-wrapper">
-                    <h2>{note.title}</h2>
-                    <p>{note.createdAt}</p>
-                    <p>{note.body}</p>
+            {loaded ? (
+                <div>
+                    <div className="error">{errorMessage}</div>
+                    {note && (
+                        <div className="note-wrapper">
+                            <h2>{note.title}</h2>
+                            <p>{note.createdAt}</p>
+                            <p>{note.body}</p>
+                        </div>
+                    )}
                 </div>
+            ) : (
+                    <div>Loading...</div>
+                )
             }
         </div>
     );
