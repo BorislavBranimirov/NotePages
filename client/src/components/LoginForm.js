@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../../utils/userContext';
 
 const LoginForm = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const { loggedUser, setLoggedUser } = useContext(UserContext);
+
+    useEffect(() => {
+        // if user doesn't have an access token and was sent to login page
+        // but user context still hasn't updated, update it
+        if (loggedUser !== null && !localStorage.getItem('accessToken')) {
+            setLoggedUser(null);
+        }
+
+        // if user is logged in, redirect to home page
+        if(localStorage.getItem('accessToken')) {
+            props.history.push('/');
+        }
+    }, []);
 
     const handleChange = (event) => {
         switch (event.target.name) {
@@ -38,6 +53,7 @@ const LoginForm = (props) => {
 
         // save the access token in local storage
         localStorage.setItem('accessToken', resJSON.accessToken);
+        setLoggedUser(username);
         props.history.push('/');
     };
 

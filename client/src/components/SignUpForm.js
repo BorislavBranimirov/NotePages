@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SignUpForm = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        // if user is logged in, redirect to home page
+        if(localStorage.getItem('accessToken')) {
+            props.history.push('/');
+        }
+    }, []);
 
     const handleChange = (event) => {
         switch (event.target.name) {
