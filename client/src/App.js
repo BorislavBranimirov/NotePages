@@ -8,6 +8,7 @@ import NotesPage from './components/NotesPage';
 import NotePage from './components/NotePage';
 import CreateNotePage from './components/CreateNotePage';
 import EditNotePage from './components/EditNotePage';
+import NotFound from './components/NotFound';
 
 const App = () => {
     return (
@@ -22,6 +23,7 @@ const App = () => {
                     <Route exact path='/create-note' component={CreateNotePage} />
                     <Route exact path='/login' component={LoginForm} />
                     <Route exact path='/signup' component={SignUpForm} />
+                    <Route component={NotFound} />
                 </Switch>
             </div>
         </BrowserRouter>
