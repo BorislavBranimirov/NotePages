@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    background: rgb(233, 233, 233);
+}
+
+#root {
+    height: inherit;
+}
+
+#root > div {
+    height: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: rgb(42, 49, 51);
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-item {
+    color: white;
+    margin: 1em 0.6em;
+    display: inline-block;
+}
+
+.nav-username {
+    font-weight: bold;
+}
+
+.logout-btn {
+    border: none;
+    background-color: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+@media (min-width: 900px) {
+    body {
+        font-size: 18px;
+    }
+}
+
+/*login*/
+
+.login-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 1em;
+    height: inherit;
+}
+
+.login-form-wrapper h2 {
+    margin: 1em 0;
+}
+
+.login-form-wrapper form input {
+    width: 100%;
+    margin: 1em 0;
+    padding: 1em;
+}
+
+.login-form-wrapper form input[type=text], input[type=password] {
+    background-color: inherit;
+    border: none;
+    border-bottom: 3px solid rgb(204, 204, 204);
+}
+
+.login-form-wrapper form input[type=submit] {
+    border: none;
+    border-radius: 2px;
+    background-color: rgb(99, 108, 116);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-form-wrapper form input[type=submit]:hover {
+    background-color: rgba(99, 108, 116, 0.6);
+}
+
+.login-form-wrapper form input[type=submit]:active {
+    background-color: rgba(99, 108, 116, 0.2);
+}
+
+/*utilities*/
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-horizontally {
+    display: flex;
+    justify-content: center;
+}
+
+.center-vertically {
+    display: flex;
+    align-items: center;
+}

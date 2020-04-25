@@ -10,7 +10,7 @@ import CreateNotePage from './components/CreateNotePage';
 import EditNotePage from './components/EditNotePage';
 import NotFound from './components/NotFound';
 
-import './style.css';
+import './style.scss';
 
 import UserContext from '../utils/userContext';
 
