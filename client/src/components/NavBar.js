@@ -8,19 +8,26 @@ const NavBar = (props) => {
 
     return (
         <nav className="navbar">
-            <Link to={'/'}>Home</Link>
-            {loggedUser ? (
-                <React.Fragment>
-                    <Link to={'/notes'}>Notes</Link>
-                    <span>{loggedUser}</span>
-                    <Logout />
-                </React.Fragment>
-            ) : (
-                    <React.Fragment>
-                        <Link to={'/login'}>Login</Link>
-                        <Link to={'/signup'}>Sign up</Link>
-                    </React.Fragment>
+            <div>
+                <Link to={'/'} className="nav-item">Home</Link>
+                {loggedUser && (
+                    <Link to={'/notes'} className="nav-item">Notes</Link>
                 )}
+            </div>
+            <div>
+                {loggedUser ? (
+                    <React.Fragment>
+                        <span className="nav-item nav-username">{loggedUser}</span>
+                        <Logout className="nav-item logout-btn" />
+                    </React.Fragment>
+                ) : (
+                        <React.Fragment>
+                            <Link to={'/login'} className="nav-item">Login</Link>
+                            <Link to={'/signup'} className="nav-item">Sign up</Link>
+                        </React.Fragment>
+                    )}
+            </div>
+
         </nav>
     );
 };

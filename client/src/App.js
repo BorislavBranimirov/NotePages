@@ -10,6 +10,8 @@ import CreateNotePage from './components/CreateNotePage';
 import EditNotePage from './components/EditNotePage';
 import NotFound from './components/NotFound';
 
+import './style.css';
+
 import UserContext from '../utils/userContext';
 
 const App = () => {
