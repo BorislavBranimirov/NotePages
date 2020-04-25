@@ -58,16 +58,39 @@ a {
 .login-form-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin: 1em;
     height: inherit;
 }
 
-.login-form-wrapper h2 {
-    margin: 1em 0;
+.login-form-wrapper .form-heading {
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+.login-form-wrapper .error {
+    display: block;
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 2em;
+    color: white;
+    background: rgb(66, 66, 66);
+    border-left: 4px solid black;
+    border-radius: 2px;
+}
+
+.login-form-wrapper form {
+    width: 100%;
+}
+
+.login-form-wrapper form label:not(:first-child) {
+    display: block;
+    width: 100%;
+    margin-top: 2.5em;
 }
 
 .login-form-wrapper form input {
+    display: block;
     width: 100%;
     margin: 1em 0;
     padding: 1em;
@@ -77,9 +100,15 @@ a {
     background-color: inherit;
     border: none;
     border-bottom: 3px solid rgb(204, 204, 204);
+    transition: 0.3s;
+}
+
+.login-form-wrapper form input[type=text]:focus, input[type=password]:focus {
+    border-bottom: 3px solid darken($color: rgb(204, 204, 204), $amount: 20);
 }
 
 .login-form-wrapper form input[type=submit] {
+    margin-top: 2.5em;
     border: none;
     border-radius: 2px;
     background-color: rgb(99, 108, 116);
@@ -94,6 +123,16 @@ a {
 
 .login-form-wrapper form input[type=submit]:active {
     background-color: rgba(99, 108, 116, 0.2);
+}
+
+@media (min-width: 900px) {
+    .login-form-wrapper .error {
+        width: 50%;
+    }
+    
+    .login-form-wrapper form {
+        width: 50%;
+    }
 }
 
 /*utilities*/

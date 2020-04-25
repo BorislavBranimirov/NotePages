@@ -58,10 +58,11 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div className="login-form">
-            <div className="error">{errorMessage}</div>
+        <div className="login-form-wrapper">
+            <h2 className="form-heading">Login</h2>
+            {errorMessage && <div className="error">{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="username">Username</label>
                 <input
                     type="text"
                     name="username"
@@ -71,7 +72,7 @@ const LoginForm = (props) => {
                     onChange={handleChange}
                     required
                 />
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     name="password"
@@ -81,7 +82,7 @@ const LoginForm = (props) => {
                     onChange={handleChange}
                     required
                 />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Login" />
             </form>
         </div>
     );
