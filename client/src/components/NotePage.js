@@ -48,23 +48,25 @@ const NotePage = (props) => {
 
     return (
         <div className="note-page">
-            <Link to={'/notes/' + props.match.params.id + '/edit'}>Edit</Link>
-            <DeleteNoteBtn deleteId={props.match.params.id} />
-            {loaded ? (
-                <div>
-                    <div className="error">{errorMessage}</div>
-                    {note && (
-                        <div className="note-wrapper">
-                            <h2>{note.title}</h2>
-                            <p>{note.createdAt}</p>
-                            <p>{note.body}</p>
-                        </div>
-                    )}
-                </div>
-            ) : (
-                    <div>Loading...</div>
-                )
-            }
+            <div className="note-page-inner-div">
+                <Link to={'/notes/' + props.match.params.id + '/edit'}>Edit</Link>
+                <DeleteNoteBtn deleteId={props.match.params.id} />
+                {loaded ? (
+                    <div>
+                        <div className="error">{errorMessage}</div>
+                        <h2>{note.title}</h2>
+                        <p>{note.createdAt}</p>
+                        {note && (
+                            <div className="note-wrapper">
+                                <p className="note-body">{note.body}</p>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                        <div>Loading...</div>
+                    )
+                }
+            </div>
         </div>
     );
 };

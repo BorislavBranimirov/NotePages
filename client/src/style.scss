@@ -137,6 +137,51 @@ a {
     }
 }
 
+/*note-page*/
+.note-page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.note-page-inner-div {
+    width: 100%;
+}
+
+
+$page-line-height: 2.5em;
+$page-underline-height: 0.1em;
+
+.note-wrapper {
+    background-color: rgb(226, 212, 186);
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(216, 180, 160) 0),
+    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.5em, transparent 0);
+    background-size: 100% $page-line-height;
+    /*separate background for holes, so they aren't necessarily on each line*/
+    /*background-image:
+    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.8em, transparent 0),
+    -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(216, 180, 160) 0);
+    background-size: 100% 5em, 100% $page-line-height;*/
+    padding-left: 3em;
+    /*background-color: rgb(208, 184, 172);*/
+    /*background-color: rgb(228, 230, 195);*/
+    /*background-color: rgb(212, 193, 236);*/
+    /*background-color: rgb(226, 212, 186);*/
+    /*background-color: rgb(234, 240, 206);*/
+}
+
+.note-body {
+    line-height: $page-line-height;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+@media (min-width: 900px) {
+    .note-page-inner-div {
+        width: 50%;
+    }
+}
+
 /*utilities*/
 .center {
     display: flex;
