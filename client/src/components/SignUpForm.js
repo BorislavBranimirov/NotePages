@@ -55,10 +55,11 @@ const SignUpForm = (props) => {
     };
 
     return (
-        <div className="sign-up-form">
-            <div className="error">{errorMessage}</div>
+        <div className="form-wrapper">
+            <h2 className="form-heading">Sign up</h2>
+            {errorMessage && <div className="error">{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="username">Username</label>
                 <input
                     type="text"
                     name="username"
@@ -68,7 +69,7 @@ const SignUpForm = (props) => {
                     onChange={handleChange}
                     required
                 />
-                <label htmlFor="password">Password:</label>
+                <label htmlFor="password">Password</label>
                 <input
                     type="password"
                     name="password"
@@ -78,7 +79,7 @@ const SignUpForm = (props) => {
                     onChange={handleChange}
                     required
                 />
-                <label htmlFor="confirmPassword">Confirm password:</label>
+                <label htmlFor="confirmPassword">Confirm password</label>
                 <input
                     type="password"
                     name="confirmPassword"
@@ -88,7 +89,7 @@ const SignUpForm = (props) => {
                     onChange={handleChange}
                     required
                 />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Sign up" />
             </form>
         </div>
     );

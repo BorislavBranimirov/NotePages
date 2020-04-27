@@ -18,6 +18,8 @@ body {
 
 #root > div {
     height: inherit;
+    display: flex;
+    flex-direction: column;
 }
 
 a {
@@ -53,22 +55,22 @@ a {
     }
 }
 
-/*login*/
+/*form*/
 
-.login-form-wrapper {
+.form-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 1em;
-    height: inherit;
+    height: 100%;
 }
 
-.login-form-wrapper .form-heading {
-    margin-top: 1em;
+.form-wrapper .form-heading {
     margin-bottom: 1.5em;
 }
 
-.login-form-wrapper .error {
+.form-wrapper .error {
     display: block;
     width: 100%;
     padding: 1em;
@@ -79,35 +81,35 @@ a {
     border-radius: 2px;
 }
 
-.login-form-wrapper form {
+.form-wrapper form {
     width: 100%;
 }
 
-.login-form-wrapper form label:not(:first-child) {
+.form-wrapper form label:not(:first-child) {
     display: block;
     width: 100%;
     margin-top: 2.5em;
 }
 
-.login-form-wrapper form input {
+.form-wrapper form input {
     display: block;
     width: 100%;
     margin: 1em 0;
     padding: 1em;
 }
 
-.login-form-wrapper form input[type=text], input[type=password] {
+.form-wrapper form input[type=text], input[type=password] {
     background-color: inherit;
     border: none;
     border-bottom: 3px solid rgb(204, 204, 204);
     transition: 0.3s;
 }
 
-.login-form-wrapper form input[type=text]:focus, input[type=password]:focus {
+.form-wrapper form input[type=text]:focus, input[type=password]:focus {
     border-bottom: 3px solid darken($color: rgb(204, 204, 204), $amount: 20);
 }
 
-.login-form-wrapper form input[type=submit] {
+.form-wrapper form input[type=submit] {
     margin-top: 2.5em;
     border: none;
     border-radius: 2px;
@@ -117,20 +119,20 @@ a {
     transition: 0.3s;
 }
 
-.login-form-wrapper form input[type=submit]:hover {
+.form-wrapper form input[type=submit]:hover {
     background-color: rgba(99, 108, 116, 0.6);
 }
 
-.login-form-wrapper form input[type=submit]:active {
+.form-wrapper form input[type=submit]:active {
     background-color: rgba(99, 108, 116, 0.2);
 }
 
 @media (min-width: 900px) {
-    .login-form-wrapper .error {
+    .form-wrapper .error {
         width: 50%;
     }
     
-    .login-form-wrapper form {
+    .form-wrapper form {
         width: 50%;
     }
 }

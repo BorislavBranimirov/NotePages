@@ -58,7 +58,7 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div className="login-form-wrapper">
+        <div className="form-wrapper">
             <h2 className="form-heading">Login</h2>
             {errorMessage && <div className="error">{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
