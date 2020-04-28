@@ -87,7 +87,7 @@ const NotePage = (props) => {
                 </p>
                 <div className="note-footer"></div>
             </div>
-        </div >
+        </div>
     );
 };
 

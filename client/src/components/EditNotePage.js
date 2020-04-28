@@ -35,6 +35,11 @@ const EditNotePage = (props) => {
 
                 setTitle(item.title);
                 setBody(item.body);
+                const titleEl = document.getElementById('title');
+                titleEl.style.height = titleEl.scrollHeight + 'px';
+
+                const bodyEl = document.getElementById('body');
+                bodyEl.style.height = bodyEl.scrollHeight + 'px';
             } catch (err) {
                 setErrorMessage('Error occured while loading note');
             }
@@ -52,6 +57,8 @@ const EditNotePage = (props) => {
                 setBody(event.target.value);
                 break;
         }
+        event.target.style.height = "0";
+        event.target.style.height = event.target.scrollHeight + 'px';
     };
 
     const handleSubmit = async (event) => {
@@ -79,27 +86,36 @@ const EditNotePage = (props) => {
     };
 
     return (
-        <div className="edit-note">
-            <div className="error">{errorMessage}</div>
+        <div className="note-form-wrapper">
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="title"
-                    value={title}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="note-form-header">
+                    <h2>Edit note</h2>
+                    <p className="error">{errorMessage}</p>
+                    <textarea
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={title}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
                 <textarea
                     name="body"
-                    cols="30"
-                    rows="10"
+                    id="body"
                     value={body}
                     onChange={handleChange}
+                    className="note-form-body"
                     required
                 />
-                <input type="submit" value="Save" />
+                <div className="note-form-footer">
+                    <Link
+                        to={'/notes/' + props.match.params.id}
+                        className="note-form-cancel-btn"
+                    >Cancel</Link>
+                    <input type="submit" value="Save" className="note-form-save-btn" />
+                </div>
             </form>
-            <Link to={'/notes/'+props.match.params.id}>Cancel</Link>
         </div>
     );
 };

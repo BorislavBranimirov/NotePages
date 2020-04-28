@@ -160,7 +160,7 @@ $page-underline-height: 0.1em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.note-header-info h2 {
+.note-header-info h2, input {
     word-wrap: break-word;
     white-space: pre-wrap;
 }
@@ -233,6 +233,96 @@ $page-underline-height: 0.1em;
         display: grid;
         grid-template-columns: minmax(0, 2fr) 1.33fr;
         grid-gap: 1em;
+    }
+}
+
+/*note-form*/
+.note-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.note-form-wrapper form {
+    width: 100%;
+}
+
+.note-form-header {
+    background-color: rgb(226, 212, 186);
+    border-bottom: 0.15em solid rgb(42, 49, 51);
+    padding: 1em;
+    border-radius: 0.5em 0.5em 0 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.note-form-header h2 {
+    text-align: center
+}
+
+.note-form-header #title {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 100%;
+    resize: none;
+    height: 0;
+}
+
+.note-form-header .error {
+    text-align: center;
+}
+
+.note-form-body {
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(226, 212, 186);
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
+    -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
+    background-size: 100% $page-line-height;
+    padding-left: 3em;
+    padding-right: 1em;
+    font-size: 1em;
+    /*#e8dcc2*/
+    line-height: $page-line-height;
+    border: none;
+    width: 100%;
+    resize: none;
+    height: 0;
+}
+
+.note-form-footer {
+    position: relative;
+    background-color: rgb(226, 212, 186);
+    padding: 1em;
+    border-radius: 0 0 0.5em 0.5em;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+}
+
+.note-form-cancel-btn {
+    padding: 0.5em 2em;
+    margin-right: 1em;
+    border: 2px solid rgb(42, 49, 51);
+    border-radius: 0.4em;
+    color: rgb(42, 49, 51);
+}
+
+.note-form-save-btn {
+    padding: 0.6em 2.8em;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    background-color: rgb(42, 49, 51);
+    border-radius: 0.4em;
+    color: white;
+}
+
+@media (min-width: 900px) {
+    .note-form-wrapper form {
+        width: 50%;
+        margin-top: 2em;
     }
 }
 
