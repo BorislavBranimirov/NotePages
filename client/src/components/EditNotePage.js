@@ -91,29 +91,37 @@ const EditNotePage = (props) => {
                 <div className="note-form-header">
                     <h2>Edit note</h2>
                     <p className="error">{errorMessage}</p>
+                    {title && (
+                        <textarea
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={title}
+                            onChange={handleChange}
+                            required
+                        />
+                    )}
+                </div>
+                {body && (
                     <textarea
-                        type="text"
-                        id="title"
-                        name="title"
-                        value={title}
+                        name="body"
+                        id="body"
+                        value={body}
                         onChange={handleChange}
+                        className="note-form-body"
                         required
                     />
-                </div>
-                <textarea
-                    name="body"
-                    id="body"
-                    value={body}
-                    onChange={handleChange}
-                    className="note-form-body"
-                    required
-                />
+                )}
                 <div className="note-form-footer">
-                    <Link
-                        to={'/notes/' + props.match.params.id}
-                        className="note-form-cancel-btn"
-                    >Cancel</Link>
-                    <input type="submit" value="Save" className="note-form-save-btn" />
+                    {body && (
+                        <React.Fragment>
+                            <Link
+                                to={'/notes/' + props.match.params.id}
+                                className="note-form-cancel-btn"
+                            >Cancel</Link>
+                            <input type="submit" value="Save" className="note-form-save-btn" />
+                        </React.Fragment>
+                    )}
                 </div>
             </form>
         </div>
