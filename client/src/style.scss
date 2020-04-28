@@ -144,30 +144,69 @@ a {
     justify-content: center;
 }
 
-.note-page-inner-div {
+.note-wrapper {
     width: 100%;
 }
-
 
 $page-line-height: 2.5em;
 $page-underline-height: 0.1em;
 
-.note-wrapper {
+.note-header {
     background-color: rgb(226, 212, 186);
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(216, 180, 160) 0),
-    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.5em, transparent 0);
+    border-bottom: 0.15em solid rgb(42, 49, 51);
+    padding: 1em;
+    padding-left: 3em;
+    border-radius: 0.5em 0.5em 0 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.note-header-info h2 {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.note-header-btns {
+    margin-top: 0.5em;
+    display: flex;
+    /*align top-left and don't stretch vertically*/
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.note-edit-btn {
+    padding: 0.5em 2em;
+    margin-right: 1em;
+    border: 2px solid rgb(42, 49, 51);
+    border-radius: 0.4em;
+    color: rgb(42, 49, 51);
+}
+
+.note-delete-btn {
+    padding: 0.6em 1.5em;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    background-color: rgb(42, 49, 51);
+    border-radius: 0.4em;
+    color: white;
+}
+
+.note-body {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgb(226, 212, 186);
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
+    -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
     /*separate background for holes, so they aren't necessarily on each line*/
     /*background-image:
-    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.8em, transparent 0),
-    -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(216, 180, 160) 0);
-    background-size: 100% 5em, 100% $page-line-height;*/
+    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.7em, transparent 0),
+    -webkit-radial-gradient(1.6em 3.7em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.7em, transparent 0),
+    -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0);
+    background-size: 100% $page-line-height * 3,  100% $page-line-height * 3, 100% $page-line-height;*/
     padding-left: 3em;
-    /*background-color: rgb(208, 184, 172);*/
-    /*background-color: rgb(228, 230, 195);*/
-    /*background-color: rgb(212, 193, 236);*/
-    /*background-color: rgb(226, 212, 186);*/
-    /*background-color: rgb(234, 240, 206);*/
+    padding-right: 1em;
+    /*#e8dcc2*/
 }
 
 .note-body {
@@ -176,9 +215,24 @@ $page-underline-height: 0.1em;
     white-space: pre-wrap;
 }
 
+.note-footer {
+    background-color: rgb(226, 212, 186);
+    padding: 2em;
+    border-radius: 0 0 0.5em 0.5em;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
 @media (min-width: 900px) {
-    .note-page-inner-div {
+    .note-wrapper {
         width: 50%;
+        margin-top: 2em;
+    }
+    
+    /*place info and buttons on the same line*/
+    .note-header {     
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) 1.33fr;
+        grid-gap: 1em;
     }
 }
 

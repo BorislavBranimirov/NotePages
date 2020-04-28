@@ -34,7 +34,7 @@ const DeleteNoteBtn = (props) => {
     };
 
     return (
-        <button onClick={handleClick}>
+        <button onClick={handleClick} className={props.className}>
             Delete
         </button>
     );

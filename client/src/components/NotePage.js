@@ -46,28 +46,48 @@ const NotePage = (props) => {
         fetchItems();
     }, []);
 
+    let header = <h2>Loading...</h2>;
+    if (loaded) {
+        if (note) {
+            header = <React.Fragment>
+                <h2>{note.title}</h2>
+                <p>{note.createdAt}</p>
+            </React.Fragment>;
+        } else {
+            header = <h2 className="error">404</h2>;
+        }
+    }
+
     return (
         <div className="note-page">
-            <div className="note-page-inner-div">
-                <Link to={'/notes/' + props.match.params.id + '/edit'}>Edit</Link>
-                <DeleteNoteBtn deleteId={props.match.params.id} />
-                {loaded ? (
-                    <div>
-                        <div className="error">{errorMessage}</div>
-                        <h2>{note.title}</h2>
-                        <p>{note.createdAt}</p>
-                        {note && (
-                            <div className="note-wrapper">
-                                <p className="note-body">{note.body}</p>
-                            </div>
-                        )}
+            <div className="note-wrapper">
+                <div className="note-header">
+                    <div className="note-header-info">
+                        {header}
                     </div>
-                ) : (
-                        <div>Loading...</div>
-                    )
-                }
+                    {note && (
+                        <div className="note-header-btns">
+                            <Link
+                                to={'/notes/' + props.match.params.id + '/edit'}
+                                className="note-edit-btn"
+                            >Edit</Link>
+                            <DeleteNoteBtn
+                                deleteId={props.match.params.id}
+                                className="note-delete-btn"
+                            />
+                        </div>
+                    )}
+                </div>
+                <p className="note-body">
+                    {note ? (
+                        note.body
+                    ) : (
+                            errorMessage
+                        )}
+                </p>
+                <div className="note-footer"></div>
             </div>
-        </div>
+        </div >
     );
 };
 
