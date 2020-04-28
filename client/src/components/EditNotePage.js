@@ -94,8 +94,8 @@ const EditNotePage = (props) => {
                     {title && (
                         <textarea
                             type="text"
-                            id="title"
                             name="title"
+                            id="title"
                             value={title}
                             onChange={handleChange}
                             required

@@ -288,7 +288,7 @@ $page-underline-height: 0.1em;
     border: none;
     width: 100%;
     resize: none;
-    height: 0;
+    height: $page-line-height;
 }
 
 .note-form-footer {

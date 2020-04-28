@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
 
@@ -6,6 +6,14 @@ const CreateNotePage = (props) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        const titleEl = document.getElementById('title');
+        titleEl.style.height = titleEl.scrollHeight + 'px';
+
+        const bodyEl = document.getElementById('body');
+        bodyEl.style.height = bodyEl.scrollHeight + 'px';
+    }, []);
 
     const handleChange = (event) => {
         switch (event.target.name) {
@@ -16,13 +24,15 @@ const CreateNotePage = (props) => {
                 setBody(event.target.value);
                 break;
         }
+        event.target.style.height = "0";
+        event.target.style.height = event.target.scrollHeight + 'px';
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         const expired = await checkTokenExpiry();
-        if(expired) {
+        if (expired) {
             return props.history.push('/login');
         }
 
@@ -44,30 +54,38 @@ const CreateNotePage = (props) => {
             return setErrorMessage(resJSON.err);
         }
 
-        props.history.push('/notes/'+resJSON.id);
+        props.history.push('/notes/' + resJSON.id);
     };
 
     return (
-        <div className="create-note">
-            <div className="error">{errorMessage}</div>
+        <div className="note-form-wrapper">
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="title"
-                    value={title}
-                    onChange={handleChange}
-                    required
-                />
+                <div className="note-form-header">
+                    <h2>Create note</h2>
+                    <p className="error">{errorMessage}</p>
+                    <textarea
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={title}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
                 <textarea
                     name="body"
-                    cols="30"
-                    rows="10"
+                    id="body"
                     value={body}
                     onChange={handleChange}
-                    required
+                    className="note-form-body"
                 />
-                <input type="submit" value="Create"/>
-                <Link to="notes">Cancel</Link>
+                <div className="note-form-footer">
+                    <Link
+                        to="notes"
+                        className="note-form-cancel-btn"
+                    >Cancel</Link>
+                    <input type="submit" value="Create" className="note-form-save-btn" />
+                </div>
             </form>
         </div>
     );

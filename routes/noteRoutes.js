@@ -16,7 +16,7 @@ router.route('/')
     .post(verifyAccessToken, async (req, res, next) => {
         // both title and body need to be provided
         if (!req.body.title || !req.body.body) {
-            return res.status(422).json({ err: 'No title and body provided' });
+            return res.status(422).json({ err: 'No title or body provided' });
         }
 
         try {
