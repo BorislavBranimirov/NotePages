@@ -39,19 +39,28 @@ const NotesPage = (props) => {
     }, []);
 
     const noteListItems = notes.map((note) =>
-        <li key={note._id}>
-            <Link to={'/notes/' + note._id}><h3>{note.title}</h3></Link>
-            <p>{note.createdAt}</p>
-            <DeleteNoteBtn deleteId={note._id} />
-            <p>{note.body}</p>
+        <li key={note._id} className="notes-list-item">
+            <div className="notes-list-item-header">
+                <div className="note-header-title-wrapper">
+                    <h3>{note.title}</h3>
+                </div>
+            </div>
+            <div className="notes-list-item-info">
+                <p className="note-list-item-date">Created at:</p>
+                <p className="note-list-item-date">{note.createdAt}</p>
+            </div>
+            <div className="notes-list-item-btns">
+                <Link to={'/notes/' + note._id} className="notes-list-item-open-btn">Open</Link>
+                <DeleteNoteBtn deleteId={note._id} className="notes-list-item-delete-btn" />
+            </div>
         </li>
     );
 
     return (
         <div className="notes-container">
-            <Link to="create-note">Create a new note</Link>
-            <div className="error">{errorMessage}</div>
-            <ul>{noteListItems}</ul>
+            {errorMessage && <div className="error">{errorMessage}</div>}
+            <Link to="create-note" className="create-note-btn">Create a new note</Link>
+            <ul className="notes-list">{noteListItems}</ul>
         </div>
     );
 };
