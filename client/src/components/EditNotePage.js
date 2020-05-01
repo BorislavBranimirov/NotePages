@@ -89,7 +89,7 @@ const EditNotePage = (props) => {
         <div className="note-form-wrapper">
             <form onSubmit={handleSubmit}>
                 <div className="note-form-header">
-                    <h2>Edit note</h2>
+                    <h2>Edit note <i class="fas fa-pencil-alt"></i></h2>
                     <p className="error">{errorMessage}</p>
                     {title && (
                         <textarea

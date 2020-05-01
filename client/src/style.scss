@@ -201,18 +201,8 @@ a {
     -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
-    /*separate background for holes, so they aren't necessarily on each line*/
-    /*background-image:
-    -webkit-radial-gradient(1.5em, circle closest-side, rgb(233, 233, 233) 0.7em, transparent 0),
-    -webkit-radial-gradient(1.6em 3.7em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.7em, transparent 0),
-    -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0);
-    background-size: 100% $page-line-height * 3,  100% $page-line-height * 3, 100% $page-line-height;*/
     padding-left: 3em;
     padding-right: 1em;
-    /*#e8dcc2*/
-}
-
-.note-body {
     line-height: $page-line-height;
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -231,10 +221,7 @@ a {
     }
     
     /*place info and buttons on the same line*/
-    .note-header {     
-        display: grid;
-        grid-template-columns: minmax(0, 2fr) 1.33fr;
-        gap: 1em;
+    .note-header {
         border-radius: 0.5em 0.5em 0 0;
     }
 
@@ -264,6 +251,10 @@ a {
     text-align: center
 }
 
+.note-form-header .error {
+    text-align: center;
+}
+
 .note-form-header #title {
     background-color: transparent;
     border: none;
@@ -272,10 +263,6 @@ a {
     width: 100%;
     resize: none;
     height: 0;
-}
-
-.note-form-header .error {
-    text-align: center;
 }
 
 .note-form-body {
