@@ -344,17 +344,32 @@ a {
     white-space: pre-wrap;
 }
 
+.notes-container-btns {
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: space-between;
+}
+
 .create-note-btn {
     padding: 0.6em 2.8em;
-    display: block;
+    display: inline-block;
     border: none;
     text-align: center;
     cursor: pointer;
     font-size: 1em;
-    margin-bottom: 2em;
     background-color: rgb(42, 49, 51);
     border-radius: 0.4em;
     color: white;
+}
+
+.notes-container-btns input[type=text] {
+    padding: 0.4em;
+    display: inline-block;
+    border: 0.2em solid rgb(42, 49, 51);
+    font-size: 1em;
+    border-radius: 0.4em;
 }
 
 .notes-list {
@@ -439,6 +454,10 @@ a {
 
     .create-note-btn {
         width: max-content;
+    }
+
+    .notes-container-btns {
+        flex-direction: row;
     }
 }
 

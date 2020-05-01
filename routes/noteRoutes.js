@@ -6,8 +6,9 @@ const { Note } = require('../models');
 
 router.route('/')
     .get(verifyAccessToken, async (req, res, next) => {
+        let regex = new RegExp(req.query.search, "i");
         try {
-            const notes = await Note.find({ authorId: res.locals.user.id });
+            const notes = await Note.find({ authorId: res.locals.user.id, title: regex });
             return res.json(notes);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for notes' });

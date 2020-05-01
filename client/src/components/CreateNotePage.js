@@ -78,6 +78,7 @@ const CreateNotePage = (props) => {
                     value={body}
                     onChange={handleChange}
                     className="note-form-body"
+                    required
                 />
                 <div className="note-form-footer">
                     <Link

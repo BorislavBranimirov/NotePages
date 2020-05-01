@@ -5,6 +5,7 @@ import { checkTokenExpiry } from '../../utils/authUtils';
 
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
+    const [search, setSearch] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
@@ -38,6 +39,41 @@ const NotesPage = (props) => {
         fetchItems();
     }, []);
 
+    const handleChange = (event) => {
+        setSearch(event.target.value);
+    }
+
+    useEffect(() => {
+        const submit = async () => {
+            try {
+                const expired = await checkTokenExpiry();
+                if (expired) {
+                    return props.history.push('/login');
+                }
+
+                const res = await fetch('/api/notes?search=' + search, {
+                    method: 'GET',
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+                    }
+                });
+
+                const notes = await res.json();
+                // check if an error was returned
+                if (notes.err) {
+                    return setErrorMessage(notes.err);
+                }
+
+                setNotes(notes);
+            } catch (err) {
+                setErrorMessage('Error occured while loading notes');
+            }
+        };
+
+        submit();
+    }, [search]);
+
     const noteListItems = notes.map((note) =>
         <li key={note._id} className="notes-list-item">
             <div className="notes-list-item-header">
@@ -59,7 +95,17 @@ const NotesPage = (props) => {
     return (
         <div className="notes-container">
             {errorMessage && <div className="error">{errorMessage}</div>}
-            <Link to="create-note" className="create-note-btn">Create a new note</Link>
+            <div className="notes-container-btns">
+                <Link to="create-note" className="create-note-btn">Create a new note</Link>
+                <input
+                    type="text"
+                    name="search-field"
+                    id="search-field"
+                    className="search-field"
+                    placeholder="Search..."
+                    onChange={handleChange}
+                />
+            </div>
             <ul className="notes-list">{noteListItems}</ul>
         </div>
     );
