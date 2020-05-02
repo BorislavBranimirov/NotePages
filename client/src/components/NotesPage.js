@@ -64,6 +64,7 @@ const NotesPage = (props) => {
         }
     }
 
+    // fetch new notes everytime query changes or on initialisation
     useEffect(() => {
         fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage);
     }, [location.search]);
@@ -94,6 +95,10 @@ const NotesPage = (props) => {
         history.push('/notes' + newQuery);
     }, [search]);
 
+    const handleDelete = () => {
+        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage);
+    };
+
     const noteListItems = notes.map((note) =>
         <li key={note._id} className="notes-list-item">
             <div className="notes-list-item-header">
@@ -107,7 +112,7 @@ const NotesPage = (props) => {
             </div>
             <div className="notes-list-item-btns">
                 <Link to={'/notes/' + note._id} className="notes-list-item-open-btn">Open</Link>
-                <DeleteNoteBtn deleteId={note._id} className="notes-list-item-delete-btn" />
+                <DeleteNoteBtn onClick={handleDelete} deleteId={note._id} className="notes-list-item-delete-btn" />
             </div>
         </li>
     );

@@ -24,12 +24,12 @@ const DeleteNoteBtn = (props) => {
             return alert('Failed to delete note');
         }
 
-        // if redirecting to a different url, refresh the page to force rerender
         const dest = '/notes';
         if(history.location.pathname !== dest) {
             history.push(dest);
         } else {
-            history.go();
+            // run passed-down function from notes page
+            props.onClick();
         }
     };
 
