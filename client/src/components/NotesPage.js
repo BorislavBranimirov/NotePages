@@ -1,7 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
+
+async function fetchNotes(url, props, setNotes, setErrorMessage) {
+    try {
+        const expired = await checkTokenExpiry();
+        if (expired) {
+            return props.history.push('/login');
+        }
+
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+            }
+        });
+
+        const items = await res.json();
+        // check if an error was returned
+        if (items.err) {
+            return setErrorMessage(items.err);
+        }
+
+        setNotes(items);
+    } catch (err) {
+        setErrorMessage('Error occured while loading notes');
+    }
+}
 
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
@@ -9,69 +36,26 @@ const NotesPage = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        const fetchItems = async () => {
-            try {
-                const expired = await checkTokenExpiry();
-                if (expired) {
-                    return props.history.push('/login');
-                }
-
-                const res = await fetch('/api/notes', {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
-                        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-                    }
-                });
-
-                const items = await res.json();
-                // check if an error was returned
-                if (items.err) {
-                    return setErrorMessage(items.err);
-                }
-
-                setNotes(items);
-            } catch (err) {
-                setErrorMessage('Error occured while loading notes');
-            }
-        };
-
-        fetchItems();
+        fetchNotes('/api/notes', props, setNotes, setErrorMessage);
     }, []);
 
     const handleChange = (event) => {
         setSearch(event.target.value);
     }
 
+    // fetch notes every time search value changes
+    // don't fetch on first render
+    const firstRender = useRef(true);
     useEffect(() => {
-        const submit = async () => {
-            try {
-                const expired = await checkTokenExpiry();
-                if (expired) {
-                    return props.history.push('/login');
-                }
-
-                const res = await fetch('/api/notes?search=' + search, {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
-                        'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-                    }
-                });
-
-                const notes = await res.json();
-                // check if an error was returned
-                if (notes.err) {
-                    return setErrorMessage(notes.err);
-                }
-
-                setNotes(notes);
-            } catch (err) {
-                setErrorMessage('Error occured while loading notes');
-            }
-        };
-
-        submit();
+        if(firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+        let url = '/api/notes';
+        if(search) {
+            url += '?search=' + search;
+        }
+        fetchNotes(url, props, setNotes, setErrorMessage);
     }, [search]);
 
     const noteListItems = notes.map((note) =>
@@ -94,7 +78,6 @@ const NotesPage = (props) => {
 
     return (
         <div className="notes-container">
-            {errorMessage && <div className="error">{errorMessage}</div>}
             <div className="notes-container-btns">
                 <Link to="create-note" className="create-note-btn">Create a new note</Link>
                 <input
@@ -106,6 +89,7 @@ const NotesPage = (props) => {
                     onChange={handleChange}
                 />
             </div>
+            {errorMessage && <div className="error">{errorMessage}</div>}
             <ul className="notes-list">{noteListItems}</ul>
         </div>
     );
