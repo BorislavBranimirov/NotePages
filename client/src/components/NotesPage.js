@@ -32,6 +32,7 @@ async function fetchNotes(url, props, setNotes, setErrorMessage) {
 
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
+    const [order, setOrder] = useState('date-asc');
     const [search, setSearch] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -40,19 +41,41 @@ const NotesPage = (props) => {
     }, []);
 
     const handleChange = (event) => {
-        setSearch(event.target.value);
+        switch (event.target.name) {
+            case 'order-menu':
+                setOrder(event.target.value);
+                break;
+            case 'search-field':
+                setSearch(event.target.value);
+                break;
+        }
     }
 
-    // fetch notes every time search value changes
+    // fetch notes every time order value changes
     // don't fetch on first render
-    const firstRender = useRef(true);
+    const firstOrderRender = useRef(true);
     useEffect(() => {
-        if(firstRender.current) {
-            firstRender.current = false;
+        if (firstOrderRender.current) {
+            firstOrderRender.current = false;
             return;
         }
         let url = '/api/notes';
-        if(search) {
+        if (order) {
+            url += '?order=' + order;
+        }
+        fetchNotes(url, props, setNotes, setErrorMessage);
+    }, [order]);
+
+    // fetch notes every time search value changes
+    // don't fetch on first render
+    const firstSearchRender = useRef(true);
+    useEffect(() => {
+        if (firstSearchRender.current) {
+            firstSearchRender.current = false;
+            return;
+        }
+        let url = '/api/notes';
+        if (search) {
             url += '?search=' + search;
         }
         fetchNotes(url, props, setNotes, setErrorMessage);
@@ -80,6 +103,17 @@ const NotesPage = (props) => {
         <div className="notes-container">
             <div className="notes-container-btns">
                 <Link to="create-note" className="create-note-btn">Create a new note</Link>
+                <select
+                    name="order-menu"
+                    value={order}
+                    onChange={handleChange}
+                    className="order-menu"
+                >
+                    <option value="name-asc">Name Ascending</option>
+                    <option value="name-desc">Name Descending</option>
+                    <option value="date-asc">Date Ascending</option>
+                    <option value="date-desc">Date Descending</option>
+                </select>
                 <input
                     type="text"
                     name="search-field"

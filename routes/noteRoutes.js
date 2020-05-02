@@ -7,8 +7,23 @@ const { Note } = require('../models');
 router.route('/')
     .get(verifyAccessToken, async (req, res, next) => {
         let regex = new RegExp(req.query.search, "i");
+        let orderObj = { createdAt: 1 };
+        switch (req.query.order) {
+            case 'name-asc':
+                orderObj = { title: 1 };
+                break;
+            case 'name-desc':
+                orderObj = { title: -1 };
+                break;
+            case 'date-asc':
+                orderObj = { createdAt: 1 };
+                break;
+            case 'date-desc':
+                orderObj = { createdAt: -1 };
+                break;
+        }
         try {
-            const notes = await Note.find({ authorId: res.locals.user.id, title: regex });
+            const notes = await Note.find({ authorId: res.locals.user.id, title: regex }).sort(orderObj);
             return res.json(notes);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for notes' });
@@ -42,7 +57,7 @@ router.route('/:id')
     .get(verifyAccessToken, async (req, res, next) => {
         try {
             const note = await Note.findById(req.params.id);
-            if(note) {
+            if (note) {
                 if (note.authorId.toString() !== res.locals.user.id) {
                     return res.status(401).json({ err: "Unauthorized to view this note" });
                 }
