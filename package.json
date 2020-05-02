@@ -21,7 +21,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.9",
     "morgan": "^1.10.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "query-string": "^6.12.1"
   },
   "devDependencies": {
     "concurrently": "^5.1.0",

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
+import queryString from 'query-string';
 
 async function fetchNotes(url, props, setNotes, setErrorMessage) {
     try {
@@ -30,15 +31,27 @@ async function fetchNotes(url, props, setNotes, setErrorMessage) {
     }
 }
 
+function updateQuery(paramName, paramValue) {
+    // add or update query parameter
+    const queryObj = queryString.parse(location.search);
+    queryObj[paramName] = paramValue;
+    let newQuery = queryString.stringify(queryObj, {
+        skipNull: true,
+        skipEmptyString: true,
+    });
+    if (newQuery.length > 0) {
+        newQuery = '?' + newQuery;
+    }
+    return newQuery;
+}
+
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);
     const [order, setOrder] = useState('date-asc');
     const [search, setSearch] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    useEffect(() => {
-        fetchNotes('/api/notes', props, setNotes, setErrorMessage);
-    }, []);
+    const location = useLocation();
+    const history = useHistory();
 
     const handleChange = (event) => {
         switch (event.target.name) {
@@ -51,6 +64,10 @@ const NotesPage = (props) => {
         }
     }
 
+    useEffect(() => {
+        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage);
+    }, [location.search]);
+
     // fetch notes every time order value changes
     // don't fetch on first render
     const firstOrderRender = useRef(true);
@@ -59,11 +76,9 @@ const NotesPage = (props) => {
             firstOrderRender.current = false;
             return;
         }
-        let url = '/api/notes';
-        if (order) {
-            url += '?order=' + order;
-        }
-        fetchNotes(url, props, setNotes, setErrorMessage);
+
+        const newQuery = updateQuery('order', order);
+        history.push('/notes' + newQuery);
     }, [order]);
 
     // fetch notes every time search value changes
@@ -74,11 +89,9 @@ const NotesPage = (props) => {
             firstSearchRender.current = false;
             return;
         }
-        let url = '/api/notes';
-        if (search) {
-            url += '?search=' + search;
-        }
-        fetchNotes(url, props, setNotes, setErrorMessage);
+
+        const newQuery = updateQuery('search', search);
+        history.push('/notes' + newQuery);
     }, [search]);
 
     const noteListItems = notes.map((note) =>
