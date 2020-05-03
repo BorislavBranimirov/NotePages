@@ -149,6 +149,17 @@ const NotesPage = (props) => {
         );
     }
 
+    // add one page if there are none in total
+    if (totalPages.current === 0) {
+        pageBtns.push(
+            <li key="1">
+                <button className="pagination-btn pagination-btn-active" onClick={changePage} value={1}>
+                    {1}
+                </button>
+            </li>
+        );
+    }
+
     return (
         <div className="notes-container">
             <div className="notes-container-btns">
