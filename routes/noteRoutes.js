@@ -6,8 +6,10 @@ const { Note } = require('../models');
 
 router.route('/')
     .get(verifyAccessToken, async (req, res, next) => {
-        let regex = new RegExp(req.query.search, "i");
+        const regex = new RegExp(req.query.search, 'i');
         let orderObj = { createdAt: 1 };
+        let limit = parseInt(req.query.limit, 10) || 25;
+        let page = parseInt(req.query.page, 10) || 1;
         switch (req.query.order) {
             case 'name-asc':
                 orderObj = { title: 1 };
@@ -23,8 +25,15 @@ router.route('/')
                 break;
         }
         try {
-            const notes = await Note.find({ authorId: res.locals.user.id, title: regex }).sort(orderObj);
-            return res.json(notes);
+            const notes = await Note.find({
+                authorId: res.locals.user.id, title: regex
+            })
+                .sort(orderObj)
+                .skip((page - 1) * limit)
+                .limit(limit);
+            const count = await Note.countDocuments({ authorId: res.locals.user.id, title: regex });
+
+            return res.json({count, page, limit, notes});
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for notes' });
         }

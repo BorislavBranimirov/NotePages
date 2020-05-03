@@ -369,6 +369,7 @@ a {
     display: inline-block;
     background-color: transparent;
     text-align: center;
+    cursor: pointer;
     border: none;
     border-bottom: 0.2em solid rgb(42, 49, 51);
     font-size: 1em;
@@ -438,6 +439,16 @@ a {
     display: flex;
 }
 
+.notes-list-item-open-btn {
+    padding: 0.6em 2.8em;
+    height: $page-line-height;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+    color: black;
+    width: 50%;
+}
+
 .notes-list-item-delete-btn {
     height: $page-line-height;
     border: none;
@@ -448,14 +459,35 @@ a {
     width: 50%;
 }
 
-.notes-list-item-open-btn {
-    padding: 0.6em 2.8em;
-    height: $page-line-height;
-    background-color: white;
+.pagination {
+    margin-top: 1em;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    width: 100%;
+    
+}
+
+.pagination > li {
     display: inline-block;
+}
+
+.pagination .pagination-btn {
+    padding: 0.6em 1em;
+    border: none;
     text-align: center;
-    color: black;
-    width: 50%;
+    cursor: pointer;
+    font-size: 1em;
+    background-color: rgb(42, 49, 51);
+    min-width: 2.5em;
+    min-height: 2.5em;
+    border-radius: 0.5em;
+    color: white;
+}
+
+.pagination .pagination-btn-active {
+    background-color: lighten($color: rgb(42, 49, 51), $amount: 15);
 }
 
 @media (min-width: 900px) {

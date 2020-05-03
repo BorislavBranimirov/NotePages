@@ -4,7 +4,7 @@ import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
 import queryString from 'query-string';
 
-async function fetchNotes(url, props, setNotes, setErrorMessage) {
+async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPages) {
     try {
         const expired = await checkTokenExpiry();
         if (expired) {
@@ -19,13 +19,20 @@ async function fetchNotes(url, props, setNotes, setErrorMessage) {
             }
         });
 
-        const items = await res.json();
-        // check if an error was returned
-        if (items.err) {
-            return setErrorMessage(items.err);
-        }
+        const resJSON = await res.json();
 
-        setNotes(items);
+        // check if an error was returned
+        if (resJSON.err) {
+            return setErrorMessage(resJSON.err);
+        }
+        page.current = resJSON.page;
+
+        if (resJSON.limit === 0) {
+            return setErrorMessage('Error occured while loading notes');
+        }
+        totalPages.current = Math.ceil(resJSON.count / resJSON.limit);
+
+        setNotes(resJSON.notes);
     } catch (err) {
         setErrorMessage('Error occured while loading notes');
     }
@@ -52,6 +59,8 @@ const NotesPage = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
     const location = useLocation();
     const history = useHistory();
+    let page = useRef(null);
+    let totalPages = useRef(null);
 
     const handleChange = (event) => {
         switch (event.target.name) {
@@ -66,7 +75,10 @@ const NotesPage = (props) => {
 
     // fetch new notes everytime query changes or on initialisation
     useEffect(() => {
-        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage);
+        const loadNotes = async () => {
+            await fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
+        };
+        loadNotes();
     }, [location.search]);
 
     // fetch notes every time order value changes
@@ -96,7 +108,15 @@ const NotesPage = (props) => {
     }, [search]);
 
     const handleDelete = () => {
-        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage);
+        const loadNotes = async () => {
+            await fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
+        };
+        loadNotes();
+    };
+
+    const changePage = (event) => {
+        const newQuery = updateQuery('page', event.target.value);
+        history.push('/notes' + newQuery);
     };
 
     const noteListItems = notes.map((note) =>
@@ -116,6 +136,18 @@ const NotesPage = (props) => {
             </div>
         </li>
     );
+
+    let pageBtns = [];
+    for (let i = 1; i <= totalPages.current; i++) {
+        let btnClass = (i === page.current) ? "pagination-btn pagination-btn-active" : "pagination-btn";
+        pageBtns.push(
+            <li key={i}>
+                <button className={btnClass} onClick={changePage} value={i}>
+                    {i}
+                </button>
+            </li>
+        );
+    }
 
     return (
         <div className="notes-container">
@@ -143,6 +175,9 @@ const NotesPage = (props) => {
             </div>
             {errorMessage && <div className="error">{errorMessage}</div>}
             <ul className="notes-list">{noteListItems}</ul>
+            <div className="pagination">
+                {pageBtns}
+            </div>
         </div>
     );
 };
