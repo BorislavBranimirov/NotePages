@@ -75,10 +75,7 @@ const NotesPage = (props) => {
 
     // fetch new notes everytime query changes or on initialisation
     useEffect(() => {
-        const loadNotes = async () => {
-            await fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
-        };
-        loadNotes();
+        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
     }, [location.search]);
 
     // fetch notes every time order value changes
@@ -108,10 +105,15 @@ const NotesPage = (props) => {
     }, [search]);
 
     const handleDelete = () => {
-        const loadNotes = async () => {
-            await fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
-        };
-        loadNotes();
+        // if deleting the last note on the last page, make the previous page current when fetching
+        if (notes.length === 1 && page.current > 1) {
+            const query = updateQuery('page', page.current - 1);
+            history.push('/notes' + query);
+            return;
+        }
+
+        // otherwise just fetch normally
+        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
     };
 
     const changePage = (event) => {
