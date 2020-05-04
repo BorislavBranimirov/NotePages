@@ -57,7 +57,7 @@ const EditNotePage = (props) => {
                 setBody(event.target.value);
                 break;
         }
-        event.target.style.height = "0";
+        event.target.style.height = '0';
         event.target.style.height = event.target.scrollHeight + 'px';
     };
 

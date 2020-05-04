@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { logout } from '../../utils/authUtils';
 import UserContext from '../../utils/userContext';
 

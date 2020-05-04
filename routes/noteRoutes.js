@@ -68,7 +68,7 @@ router.route('/:id')
             const note = await Note.findById(req.params.id);
             if (note) {
                 if (note.authorId.toString() !== res.locals.user.id) {
-                    return res.status(401).json({ err: "Unauthorized to view this note" });
+                    return res.status(401).json({ err: 'Unauthorized to view this note' });
                 }
             }
 
@@ -90,7 +90,7 @@ router.route('/:id')
             }
 
             if (note.authorId.toString() !== res.locals.user.id) {
-                return res.status(401).json({ err: "Unauthorized to edit this note" });
+                return res.status(401).json({ err: 'Unauthorized to edit this note' });
             }
 
             // if title and body are the same or if one is the same and the other is not provided
@@ -120,7 +120,7 @@ router.route('/:id')
                 return res.status(404).send({ err: 'Note not found' });
             }
             if (note.authorId.toString() !== res.locals.user.id) {
-                return res.status(401).json({ err: "Unauthorized to delete this note" });
+                return res.status(401).json({ err: 'Unauthorized to delete this note' });
             }
 
             return res.json({ success: true });

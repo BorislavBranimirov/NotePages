@@ -49,7 +49,7 @@ router.route('/refresh-token')
     .post(async (req, res, next) => {
         // refresh token should be supplied in a cookie
         if (req.cookies.refreshToken === undefined) {
-            return res.status(401).json({ err: "No refresh token provided" });
+            return res.status(401).json({ err: 'No refresh token provided' });
         }
 
         const refreshToken = req.cookies.refreshToken;
@@ -76,9 +76,9 @@ router.route('/refresh-token')
         } catch (err) {
             // if refresh token is expired send a 401, the user should log in again to receive a new one
             if (err instanceof jwt.TokenExpiredError) {
-                return res.status(401).json({ err: "Unauthorized" });
+                return res.status(401).json({ err: 'Unauthorized' });
             }
-            return res.status(500).json({ err: "An error occurred while refreshing token" });
+            return res.status(500).json({ err: 'An error occurred while refreshing token' });
         }
     });
 
