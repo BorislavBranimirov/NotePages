@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
 
@@ -6,6 +6,7 @@ const EditNotePage = (props) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const titleRef = useRef();
 
     useEffect(() => {
         const fetchNote = async () => {
@@ -40,6 +41,10 @@ const EditNotePage = (props) => {
 
                 const bodyEl = document.getElementById('body');
                 bodyEl.style.height = bodyEl.scrollHeight + 'px';
+
+                // move focus to the end of input
+                titleRef.current.focus();
+                titleRef.current.setSelectionRange(item.title.length, item.title.length);
             } catch (err) {
                 setErrorMessage('Error occured while loading note');
             }
@@ -89,18 +94,17 @@ const EditNotePage = (props) => {
         <div className="note-form-wrapper">
             <form onSubmit={handleSubmit}>
                 <div className="note-form-header">
-                    <h2>Edit note <i class="fas fa-pencil-alt"></i></h2>
+                    <h2>Edit note <i className="fas fa-pencil-alt"></i></h2>
                     <p className="error">{errorMessage}</p>
-                    {title && (
-                        <textarea
-                            type="text"
-                            name="title"
-                            id="title"
-                            value={title}
-                            onChange={handleChange}
-                            required
-                        />
-                    )}
+                    <textarea
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={title}
+                        onChange={handleChange}
+                        ref={titleRef}
+                        required
+                    />
                 </div>
                 {body && (
                     <textarea

@@ -69,6 +69,7 @@ const CreateNotePage = (props) => {
                         id="title"
                         value={title}
                         onChange={handleChange}
+                        autoFocus
                         required
                     />
                 </div>
