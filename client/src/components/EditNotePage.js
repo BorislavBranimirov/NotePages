@@ -106,26 +106,22 @@ const EditNotePage = (props) => {
                         required
                     />
                 </div>
-                {body && (
-                    <textarea
-                        name="body"
-                        id="body"
-                        value={body}
-                        onChange={handleChange}
-                        className="note-form-body"
-                        required
-                    />
-                )}
+                <textarea
+                    name="body"
+                    id="body"
+                    value={body}
+                    onChange={handleChange}
+                    className="note-form-body"
+                    required
+                />
                 <div className="note-form-footer">
-                    {body && (
-                        <React.Fragment>
-                            <Link
-                                to={'/notes/' + props.match.params.id}
-                                className="note-form-cancel-btn"
-                            >Cancel</Link>
-                            <input type="submit" value="Save" className="note-form-save-btn" />
-                        </React.Fragment>
-                    )}
+                    <React.Fragment>
+                        <Link
+                            to={'/notes/' + props.match.params.id}
+                            className="note-form-cancel-btn"
+                        >Cancel</Link>
+                        <input type="submit" value="Save" className="note-form-save-btn" />
+                    </React.Fragment>
                 </div>
             </form>
         </div>
