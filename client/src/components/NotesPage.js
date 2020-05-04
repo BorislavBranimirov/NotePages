@@ -38,10 +38,13 @@ async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPage
     }
 }
 
-function updateQuery(paramName, paramValue) {
+function updateQuery(paramObj, oldQuery = null) {
+    let queryToUpdate = oldQuery || location.search;
     // add or update query parameter
-    const queryObj = queryString.parse(location.search);
-    queryObj[paramName] = paramValue;
+    const queryObj = queryString.parse(queryToUpdate);
+    for (let key in paramObj) {
+        queryObj[key] = paramObj[key];
+    }
     let newQuery = queryString.stringify(queryObj, {
         skipNull: true,
         skipEmptyString: true,
@@ -87,7 +90,7 @@ const NotesPage = (props) => {
             return;
         }
 
-        const newQuery = updateQuery('order', order);
+        const newQuery = updateQuery({ 'order': order });
         history.push('/notes' + newQuery);
     }, [order]);
 
@@ -100,14 +103,14 @@ const NotesPage = (props) => {
             return;
         }
 
-        const newQuery = updateQuery('search', search);
+        const newQuery = updateQuery({ 'search': search });
         history.push('/notes' + newQuery);
     }, [search]);
 
     const handleDelete = () => {
         // if deleting the last note on the last page, make the previous page current when fetching
         if (notes.length === 1 && page.current > 1) {
-            const query = updateQuery('page', page.current - 1);
+            const query = updateQuery({ 'page': page.current - 1 });
             history.push('/notes' + query);
             return;
         }
@@ -117,7 +120,7 @@ const NotesPage = (props) => {
     };
 
     const changePage = (event) => {
-        const newQuery = updateQuery('page', event.target.value);
+        const newQuery = updateQuery({ 'page': event.target.value });
         history.push('/notes' + newQuery);
     };
 
