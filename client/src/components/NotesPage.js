@@ -90,7 +90,7 @@ const NotesPage = (props) => {
             return;
         }
 
-        const newQuery = updateQuery({ 'order': order });
+        const newQuery = updateQuery({ 'order': order, 'page': 1 });
         history.push('/notes' + newQuery);
     }, [order]);
 
@@ -103,7 +103,7 @@ const NotesPage = (props) => {
             return;
         }
 
-        const newQuery = updateQuery({ 'search': search });
+        const newQuery = updateQuery({ 'search': search, 'page': 1 });
         history.push('/notes' + newQuery);
     }, [search]);
 
