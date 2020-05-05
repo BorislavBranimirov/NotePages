@@ -38,6 +38,38 @@ async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPage
     }
 }
 
+function createPaginationListItems(currentPage, totalPages, onClick) {
+    // keep the number odd, so that there are an equal number of buttons around current button
+    const maxItems = 7;
+    const diff = Math.floor(maxItems - 2) / 2;
+    let pageBtns = [];
+    let lastValue = null;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (i == 1 || i == totalPages || (i > currentPage - diff && i < currentPage + diff)) {
+            if (pageBtns.length > 0 && i - lastValue > 1) {
+                pageBtns.push(
+                    <li key={i + 'empty'}>
+                        <p className="pagination-empty">…</p>
+                    </li>
+                );
+            }
+
+            let btnClass = (i === currentPage) ? "pagination-btn pagination-btn-active" : "pagination-btn";
+            pageBtns.push(
+                <li key={i}>
+                    <button className={btnClass} onClick={onClick} value={i}>
+                        {i}
+                    </button>
+                </li>
+            );
+            lastValue = i;
+        }
+    }
+
+    return pageBtns;
+}
+
 // default order;
 let _defaultOrder = 'date-asc';
 
@@ -158,7 +190,7 @@ const NotesPage = (props) => {
     );
 
     let pageBtns = [];
-    for (let i = 1; i <= totalPages.current; i++) {
+    /*for (let i = 1; i <= totalPages.current; i++) {
         let btnClass = (i === page.current) ? "pagination-btn pagination-btn-active" : "pagination-btn";
         pageBtns.push(
             <li key={i}>
@@ -167,7 +199,8 @@ const NotesPage = (props) => {
                 </button>
             </li>
         );
-    }
+    }*/
+    pageBtns = createPaginationListItems(page.current, totalPages.current, changePage);
 
     // add one page if there are none in total
     if (totalPages.current === 0) {

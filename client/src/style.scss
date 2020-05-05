@@ -464,7 +464,7 @@ a {
     list-style-type: none;
     display: flex;
     justify-content: center;
-    gap: 1em;
+    gap: 0.5em;
     width: 100%;
 }
 
@@ -487,6 +487,10 @@ a {
 
 .pagination .pagination-btn-active {
     background-color: lighten($color: rgb(42, 49, 51), $amount: 15);
+}
+
+.pagination .pagination-empty {
+    padding: 0.6em;
 }
 
 @media (min-width: 900px) {
