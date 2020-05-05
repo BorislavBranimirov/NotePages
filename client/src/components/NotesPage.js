@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
-import queryString from 'query-string';
+import { updateQuery, getQueryObj } from '../../utils/queryUtils';
 
 async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPages) {
     try {
@@ -38,23 +38,6 @@ async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPage
     }
 }
 
-function updateQuery(paramObj, oldQuery = null) {
-    let queryToUpdate = oldQuery || location.search;
-    // add or update query parameter
-    const queryObj = queryString.parse(queryToUpdate);
-    for (let key in paramObj) {
-        queryObj[key] = paramObj[key];
-    }
-    let newQuery = queryString.stringify(queryObj, {
-        skipNull: true,
-        skipEmptyString: true,
-    });
-    if (newQuery.length > 0) {
-        newQuery = '?' + newQuery;
-    }
-    return newQuery;
-}
-
 // default order;
 let _defaultOrder = 'date-asc';
 
@@ -85,7 +68,7 @@ const NotesPage = (props) => {
 
     // fetch new notes everytime query changes or on initialisation
     useEffect(() => {
-        const queryObj = queryString.parse(location.search);
+        const queryObj = getQueryObj();
         // if on change of query, search parameter is set but search input field doesn't have the same value
         // or has no value, update it, and don't cause its useEffect hook to fire again
         if (queryObj.search && queryObj.search !== search) {
@@ -94,11 +77,11 @@ const NotesPage = (props) => {
         }
         // if no search param, but search input field has text, remove it
         // used for when going backward from to a page with a search param to a page without, for example
-        if (!queryObj.search && search!=='') {
+        if (!queryObj.search && search !== '') {
             shouldRenderSearch.current = false;
             setSearch('');
         }
-        
+
         // if on change of query, order parameter is set but order menu doesn't have the same value
         // or has no value, update it, and don't cause its useEffect hook to fire again
         if (queryObj.order && queryObj.order !== order) {
