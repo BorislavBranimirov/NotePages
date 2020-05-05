@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
+import Pagination from './Pagination';
 import { checkTokenExpiry } from '../../utils/authUtils';
 import { updateQuery, getQueryObj } from '../../utils/queryUtils';
 
@@ -36,38 +37,6 @@ async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPage
     } catch (err) {
         setErrorMessage('Error occured while loading notes');
     }
-}
-
-function createPaginationListItems(currentPage, totalPages, onClick) {
-    // keep the number odd, so that there are an equal number of buttons around current button
-    const maxItems = 7;
-    const diff = Math.floor(maxItems - 2) / 2;
-    let pageBtns = [];
-    let lastValue = null;
-
-    for (let i = 1; i <= totalPages; i++) {
-        if (i == 1 || i == totalPages || (i > currentPage - diff && i < currentPage + diff)) {
-            if (pageBtns.length > 0 && i - lastValue > 1) {
-                pageBtns.push(
-                    <li key={i + 'empty'}>
-                        <p className="pagination-empty">…</p>
-                    </li>
-                );
-            }
-
-            let btnClass = (i === currentPage) ? "pagination-btn pagination-btn-active" : "pagination-btn";
-            pageBtns.push(
-                <li key={i}>
-                    <button className={btnClass} onClick={onClick} value={i}>
-                        {i}
-                    </button>
-                </li>
-            );
-            lastValue = i;
-        }
-    }
-
-    return pageBtns;
 }
 
 // default order;
@@ -166,11 +135,6 @@ const NotesPage = (props) => {
         fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
     };
 
-    const changePage = (event) => {
-        const newQuery = updateQuery({ 'page': event.target.value });
-        history.push('/notes' + newQuery);
-    };
-
     const noteListItems = notes.map((note) =>
         <li key={note._id} className="notes-list-item">
             <div className="notes-list-item-header">
@@ -188,30 +152,6 @@ const NotesPage = (props) => {
             </div>
         </li>
     );
-
-    let pageBtns = [];
-    /*for (let i = 1; i <= totalPages.current; i++) {
-        let btnClass = (i === page.current) ? "pagination-btn pagination-btn-active" : "pagination-btn";
-        pageBtns.push(
-            <li key={i}>
-                <button className={btnClass} onClick={changePage} value={i}>
-                    {i}
-                </button>
-            </li>
-        );
-    }*/
-    pageBtns = createPaginationListItems(page.current, totalPages.current, changePage);
-
-    // add one page if there are none in total
-    if (totalPages.current === 0) {
-        pageBtns.push(
-            <li key="1">
-                <button className="pagination-btn pagination-btn-active" onClick={changePage} value={1}>
-                    {1}
-                </button>
-            </li>
-        );
-    }
 
     return (
         <div className="notes-container">
@@ -240,9 +180,7 @@ const NotesPage = (props) => {
             </div>
             {errorMessage && <div className="error">{errorMessage}</div>}
             <ul className="notes-list">{noteListItems}</ul>
-            <div className="pagination">
-                {pageBtns}
-            </div>
+            <Pagination currentPage={page} totalPages={totalPages} />
         </div>
     );
 };
