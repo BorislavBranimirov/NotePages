@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
 
 const DeleteNoteBtn = (props) => {
+    const [showModal, setShowModal] = useState(false);
+    const wrapperRef = useRef(null);
     let history = useHistory();
 
     const handleClick = async (event) => {
         const expired = await checkTokenExpiry();
-        if(expired) {
+        if (expired) {
             return history.push('/login');
         }
 
@@ -20,12 +22,12 @@ const DeleteNoteBtn = (props) => {
         });
 
         const resJSON = await res.json();
-        if(resJSON.err) {
+        if (resJSON.err) {
             return alert('Failed to delete note');
         }
 
         const dest = '/notes';
-        if(history.location.pathname !== dest) {
+        if (history.location.pathname !== dest) {
             history.push(dest);
         } else {
             // run passed-down function from notes page
@@ -33,10 +35,41 @@ const DeleteNoteBtn = (props) => {
         }
     };
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            console.log(wrapperRef.current);
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setShowModal(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [wrapperRef]);
+
     return (
-        <button onClick={handleClick} className={props.className}>
-            Delete
-        </button>
+        <React.Fragment>
+            {showModal && (
+                <div className="delete-modal-wrapper">
+                    <div className="delete-modal" ref={wrapperRef}>
+                        <h2>Are you sure you want to delete the note?</h2>
+                        <div className="delete-modal-btns">
+                            <button className="delete-modal-confirm" onClick={handleClick}>
+                                Delete
+                            </button>
+                            <button className="delete-modal-cancel" onClick={() => setShowModal(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            <button onClick={() => setShowModal(true)} className={props.className}>
+                Delete
+            </button>
+        </React.Fragment>
     );
 };
 
