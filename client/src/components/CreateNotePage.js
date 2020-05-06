@@ -82,11 +82,11 @@ const CreateNotePage = (props) => {
                     required
                 />
                 <div className="note-form-footer">
+                    <input type="submit" value="Create" className="note-form-save-btn" />
                     <Link
                         to="notes"
                         className="note-form-cancel-btn"
                     >Cancel</Link>
-                    <input type="submit" value="Create" className="note-form-save-btn" />
                 </div>
             </form>
         </div>

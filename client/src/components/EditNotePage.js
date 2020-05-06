@@ -116,11 +116,11 @@ const EditNotePage = (props) => {
                 />
                 <div className="note-form-footer">
                     <React.Fragment>
+                        <input type="submit" value="Save" className="note-form-save-btn" />
                         <Link
                             to={'/notes/' + props.match.params.id}
                             className="note-form-cancel-btn"
                         >Cancel</Link>
-                        <input type="submit" value="Save" className="note-form-save-btn" />
                     </React.Fragment>
                 </div>
             </form>
