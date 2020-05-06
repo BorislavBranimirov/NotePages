@@ -37,7 +37,6 @@ const DeleteNoteBtn = (props) => {
 
     useEffect(() => {
         function handleClickOutside(event) {
-            console.log(wrapperRef.current);
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
                 setShowModal(false);
             }
