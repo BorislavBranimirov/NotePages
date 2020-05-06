@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import DeleteNoteBtn from './DeleteNoteBtn';
+import NotesList from './NotesList';
 import Pagination from './Pagination';
 import { checkTokenExpiry } from '../../utils/authUtils';
 import { updateQuery, getQueryObj } from '../../utils/queryUtils';
@@ -135,24 +135,6 @@ const NotesPage = (props) => {
         fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
     };
 
-    const noteListItems = notes.map((note) =>
-        <li key={note._id} className="notes-list-item">
-            <div className="notes-list-item-header">
-                <div className="note-header-title-wrapper">
-                    <h3>{note.title}</h3>
-                </div>
-            </div>
-            <div className="notes-list-item-info">
-                <p className="note-list-item-date">Created at:</p>
-                <p className="note-list-item-date">{note.createdAt}</p>
-            </div>
-            <div className="notes-list-item-btns">
-                <Link to={'/notes/' + note._id} className="notes-list-item-open-btn">Open</Link>
-                <DeleteNoteBtn onClick={handleDelete} deleteId={note._id} className="notes-list-item-delete-btn" />
-            </div>
-        </li>
-    );
-
     return (
         <div className="notes-container">
             <div className="notes-container-btns">
@@ -179,7 +161,7 @@ const NotesPage = (props) => {
                 />
             </div>
             {errorMessage && <div className="error">{errorMessage}</div>}
-            <ul className="notes-list">{noteListItems}</ul>
+            <NotesList notes={notes} deleteHandler={handleDelete} />
             <Pagination currentPage={page} totalPages={totalPages} />
         </div>
     );
