@@ -2,6 +2,9 @@
 
 $page-line-height: 2.5em;
 $page-underline-height: 0.1em;
+$site-background-color: rgb(233, 233, 233);
+$secondary-color: rgb(42, 49, 51);
+$note-color: rgb(226, 212, 186);
 
 * {
     box-sizing: border-box;
@@ -12,7 +15,7 @@ $page-underline-height: 0.1em;
 
 body {
     height: 100vh;
-    background: rgb(233, 233, 233);
+    background: $site-background-color;
 }
 
 #root {
@@ -30,7 +33,7 @@ a {
 }
 
 .navbar {
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     display: flex;
     justify-content: space-between;
 }
@@ -119,19 +122,19 @@ a {
     padding: 0.7em;
     border: none;
     border-radius: 0.3em;
-    background-color: rgb(99, 108, 116);
-    color: rgb(255, 255, 255);
+    background-color: $secondary-color;
+    color: white;
     cursor: pointer;
     transition: 0.3s;
     font-size: inherit;
 }
 
 .form-wrapper form input[type=submit]:hover {
-    background-color: rgba(99, 108, 116, 0.6);
+    background-color: transparentize($color: $secondary-color, $amount: 0.4);
 }
 
 .form-wrapper form input[type=submit]:active {
-    background-color: rgba(99, 108, 116, 0.2);
+    background-color: transparentize($color: $secondary-color, $amount: 0.8);
 }
 
 @media (min-width: 900px) {
@@ -156,8 +159,8 @@ a {
 }
 
 .note-header {
-    background-color: rgb(226, 212, 186);
-    border-bottom: 0.15em solid rgb(42, 49, 51);
+    background-color: $note-color;
+    border-bottom: 0.15em solid $secondary-color;
     padding: 1em;
     padding-left: 3em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -179,9 +182,9 @@ a {
 .note-edit-btn {
     padding: 0.5em 2em;
     margin-right: 1em;
-    border: 2px solid rgb(42, 49, 51);
+    border: 2px solid $secondary-color;
     border-radius: 0.4em;
-    color: rgb(42, 49, 51);
+    color: $secondary-color;
 }
 
 .note-delete-btn {
@@ -189,16 +192,16 @@ a {
     border: none;
     cursor: pointer;
     font-size: 1em;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     border-radius: 0.4em;
     color: white;
 }
 
 .note-body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: rgb(226, 212, 186);
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0),
-    -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
+    background-color: $note-color;
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
     padding-left: 3em;
@@ -209,7 +212,7 @@ a {
 }
 
 .note-footer {
-    background-color: rgb(226, 212, 186);
+    background-color: $note-color;
     padding: 2em;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -241,8 +244,8 @@ a {
 }
 
 .note-form-header {
-    background-color: rgb(226, 212, 186);
-    border-bottom: 0.15em solid rgb(42, 49, 51);
+    background-color: $note-color;
+    border-bottom: 0.15em solid $secondary-color;
     padding: 1em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -268,9 +271,9 @@ a {
 .note-form-body {
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: rgb(226, 212, 186);
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0),
-    -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
+    background-color: $note-color;
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
     padding-left: 3em;
@@ -286,7 +289,7 @@ a {
 
 .note-form-footer {
     position: relative;
-    background-color: rgb(226, 212, 186);
+    background-color: $note-color;
     padding: 1em;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
     display: flex;
@@ -296,9 +299,9 @@ a {
 .note-form-cancel-btn {
     padding: 0.5em 2em;
     margin-right: 1em;
-    border: 2px solid rgb(42, 49, 51);
+    border: 2px solid $secondary-color;
     border-radius: 0.4em;
-    color: rgb(42, 49, 51);
+    color: $secondary-color;
 }
 
 .note-form-save-btn {
@@ -306,7 +309,7 @@ a {
     border: none;
     cursor: pointer;
     font-size: 1em;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     border-radius: 0.4em;
     color: white;
 }
@@ -359,7 +362,7 @@ a {
     text-align: center;
     cursor: pointer;
     font-size: 1em;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     border-radius: 0.4em;
     color: white;
 }
@@ -371,7 +374,7 @@ a {
     text-align: center;
     cursor: pointer;
     border: none;
-    border-bottom: 0.2em solid rgb(42, 49, 51);
+    border-bottom: 0.2em solid $secondary-color;
     font-size: 1em;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -382,7 +385,7 @@ a {
     padding: 0.4em;
     min-width: 0;
     display: inline-block;
-    border: 0.2em solid rgb(42, 49, 51);
+    border: 0.2em solid $secondary-color;
     font-size: 1em;
     border-radius: 0.4em;
 }
@@ -395,7 +398,7 @@ a {
 }
 
 .notes-list-item {
-    background: rgb(226, 212, 186);
+    background: $note-color;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -404,7 +407,7 @@ a {
 }
 
 .notes-list-item-header {
-    border-bottom: 0.15em solid rgb(42, 49, 51);
+    border-bottom: 0.15em solid $secondary-color;
 }
 
 .note-header-title-wrapper {
@@ -420,8 +423,8 @@ a {
 .notes-list-item-info {
     color: black;
     line-height: $page-line-height;
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, rgb(42, 49, 51) 0),
-    -webkit-radial-gradient(1.5em, circle closest-side,rgb(233, 233, 233) 0.5em, transparent 0),
+    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
     overflow: hidden;
@@ -454,7 +457,7 @@ a {
     border: none;
     cursor: pointer;
     font-size: 1em;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     color: white;
     width: 50%;
 }
@@ -478,7 +481,7 @@ a {
     text-align: center;
     cursor: pointer;
     font-size: 1em;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     min-width: 2.5em;
     min-height: 2.5em;
     border-radius: 0.5em;
@@ -486,7 +489,7 @@ a {
 }
 
 .pagination .pagination-btn-active {
-    background-color: lighten($color: rgb(42, 49, 51), $amount: 15);
+    background-color: lighten($color: $secondary-color, $amount: 15);
 }
 
 .pagination .pagination-empty {
@@ -530,7 +533,7 @@ a {
 
 .delete-modal {
     position: absolute;
-    background-color: rgb(233, 233, 233);
+    background-color: $site-background-color;
     top: 0;
     margin-top: 5em;
     border-radius: 0.5em;
@@ -553,7 +556,7 @@ a {
     padding: 0.7em 2.8em;
     border: none;
     cursor: pointer;
-    background-color: rgb(42, 49, 51);
+    background-color: $secondary-color;
     color: white;
     font-size: 1em;
     border-radius: 0.4em;
@@ -565,7 +568,7 @@ a {
     cursor: pointer;
     background-color: white;
     font-size: 1em;
-    border: 0.2em solid rgb(42, 49, 51);
+    border: 0.2em solid $secondary-color;
     border-radius: 0.4em;
 }
 
