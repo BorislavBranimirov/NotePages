@@ -49,9 +49,10 @@ const NotePage = (props) => {
     let header = <h2>Loading...</h2>;
     if (loaded) {
         if (note) {
+            console.log(note.createdAt)
             header = <React.Fragment>
                 <h2>{note.title}</h2>
-                <p>{note.createdAt}</p>
+                <p>{Date(note.createdAt).toString()}</p>
             </React.Fragment>;
         } else {
             header = <h2 className="error">404</h2>;

@@ -12,7 +12,7 @@ const NotesList = (props) => {
             </div>
             <div className="notes-list-item-info">
                 <p className="note-list-item-date">Created at:</p>
-                <p className="note-list-item-date">{note.createdAt}</p>
+                <p className="note-list-item-date">{Date(note.createdAt).toString()}</p>
             </div>
             <div className="notes-list-item-btns">
                 <Link to={'/notes/' + note._id} className="notes-list-item-open-btn">Open</Link>
