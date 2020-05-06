@@ -51,7 +51,7 @@ a {
 .logout-btn {
     border: none;
     background-color: inherit;
-    font-size: 1rem;
+    font-size: 1em;
     cursor: pointer;
 }
 
@@ -104,6 +104,7 @@ a {
     width: 100%;
     margin: 1em 0;
     padding: 1em;
+    font-size: 1em;
 }
 
 .form-wrapper form input[type=text], input[type=password] {
