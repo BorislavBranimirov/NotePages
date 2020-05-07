@@ -49,19 +49,21 @@ a {
     display: inline-block;
 }
 
-.nav-item:not(.nav-username)::after {
+.nav-item:not(.nav-username):after {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0%;
+    transform: scaleX(0);
+    transform-origin: left;
+    width: 100%;
     content: '';
     background-color: white;
     height: 1px;
-    transition: .3s;
+    transition: all 0.3s;
 }
 
-.nav-item:hover::after {
-    width: 100%;
+.nav-item:not(.nav-username):hover:after {
+    transform: scaleX(1);
 }
 
 .nav-username {
