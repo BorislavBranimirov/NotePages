@@ -8,7 +8,7 @@ const SignUpForm = (props) => {
 
     useEffect(() => {
         // if user is logged in, redirect to home page
-        if(localStorage.getItem('accessToken')) {
+        if (localStorage.getItem('accessToken')) {
             props.history.push('/');
         }
     }, []);
@@ -30,28 +30,32 @@ const SignUpForm = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if(password!==confirmPassword) {
-            return setErrorMessage('Passwords must be the same');
-        }
-
-        const res = await fetch('/api/users', {
-            method: 'POST',
-            body: JSON.stringify({
-                username,
-                password
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
+        try {
+            if (password !== confirmPassword) {
+                return setErrorMessage('Passwords must be the same');
             }
-        });
 
-        const resJSON = await res.json();
-        // check if an error was returned
-        if (resJSON.err) {
-            return setErrorMessage(resJSON.err);
+            const res = await fetch('/api/users', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            });
+
+            const resJSON = await res.json();
+            // check if an error was returned
+            if (resJSON.err) {
+                return setErrorMessage(resJSON.err);
+            }
+
+            props.history.push('/login');
+        } catch (err) {
+            setErrorMessage('Error occurred while trying to sign up');
         }
-
-        props.history.push('/login');
     };
 
     return (

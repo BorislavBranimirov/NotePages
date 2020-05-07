@@ -30,31 +30,35 @@ const CreateNotePage = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        const expired = await checkTokenExpiry();
-        if (expired) {
-            return props.history.push('/login');
-        }
-
-        const res = await fetch('/api/notes', {
-            method: 'POST',
-            body: JSON.stringify({
-                title,
-                body
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+        
+        try {
+            const expired = await checkTokenExpiry();
+            if (expired) {
+                return props.history.push('/login');
             }
-        });
-
-        const resJSON = await res.json();
-        // check if an error was returned
-        if (resJSON.err) {
-            return setErrorMessage(resJSON.err);
+    
+            const res = await fetch('/api/notes', {
+                method: 'POST',
+                body: JSON.stringify({
+                    title,
+                    body
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+                }
+            });
+    
+            const resJSON = await res.json();
+            // check if an error was returned
+            if (resJSON.err) {
+                return setErrorMessage(resJSON.err);
+            }
+    
+            props.history.push('/notes/' + resJSON.id);
+        } catch (err) {
+            setErrorMessage('Error occured while creating note');
         }
-
-        props.history.push('/notes/' + resJSON.id);
     };
 
     return (

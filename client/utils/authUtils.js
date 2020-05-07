@@ -22,32 +22,40 @@ export const checkTokenExpiry = async () => {
     if (!shouldRenew) {
         return false;
     } else {
-        const res = await fetch('/api/auth/refresh-token', {
-            method: 'POST'
-        });
+        try {
+            const res = await fetch('/api/auth/refresh-token', {
+                method: 'POST'
+            });
 
-        if (res.status === 401) {
-            // if refresh token is expired or missing, remove current token data
-            logout();
-            return true;
-        }
+            if (res.status === 401) {
+                // if refresh token is expired or missing, remove current token data
+                logout();
+                return true;
+            }
 
-        const resJSON = await res.json();
-        // check if an error was returned
-        if (resJSON.err) {
-            // continue on non-401 type of errors
+            const resJSON = await res.json();
+            // check if an error was returned
+            if (resJSON.err) {
+                // continue on non-401 type of errors
+                return false;
+            }
+
+            // if new access token was returned, save it in local storage
+            localStorage.setItem('accessToken', resJSON.accessToken);
+            return false;
+        } catch (err) {
             return false;
         }
-
-        // if new access token was returned, save it in local storage
-        localStorage.setItem('accessToken', resJSON.accessToken);
-        return false;
     }
 };
 
 export const logout = () => {
     localStorage.removeItem('accessToken');
-    fetch('/api/auth/logout', {
-        method: 'POST'
-    });
+    try {
+        fetch('/api/auth/logout', {
+            method: 'POST'
+        });
+    } catch (err) {
+        alert('Error occured while trying to log out');
+    }
 };

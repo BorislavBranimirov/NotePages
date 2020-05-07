@@ -15,7 +15,7 @@ const LoginForm = (props) => {
         }
 
         // if user is logged in, redirect to home page
-        if(localStorage.getItem('accessToken')) {
+        if (localStorage.getItem('accessToken')) {
             props.history.push('/');
         }
     }, []);
@@ -34,27 +34,31 @@ const LoginForm = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const res = await fetch('/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                username,
-                password
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username,
+                    password
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            });
+
+            const resJSON = await res.json();
+            // check if an error was returned
+            if (resJSON.err) {
+                return setErrorMessage(resJSON.err);
             }
-        });
 
-        const resJSON = await res.json();
-        // check if an error was returned
-        if (resJSON.err) {
-            return setErrorMessage(resJSON.err);
+            // save the access token in local storage
+            localStorage.setItem('accessToken', resJSON.accessToken);
+            setLoggedUser(username);
+            props.history.push('/');
+        } catch (err) {
+            setErrorMessage('Error occured while trying to log in')
         }
-
-        // save the access token in local storage
-        localStorage.setItem('accessToken', resJSON.accessToken);
-        setLoggedUser(username);
-        props.history.push('/');
     };
 
     return (
