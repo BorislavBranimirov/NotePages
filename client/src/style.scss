@@ -239,7 +239,7 @@ a {
 .note-body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: $note-color;
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
     -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
@@ -309,9 +309,10 @@ a {
 
 .note-form-body {
     overflow: hidden;
+    display: block;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: $note-color;
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
     -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
@@ -320,6 +321,7 @@ a {
     font-size: 1em;
     /*#e8dcc2*/
     line-height: $page-line-height;
+    margin: 0;
     border: none;
     width: 100%;
     resize: none;
@@ -408,7 +410,6 @@ a {
     margin-bottom: 2em;
     display: flex;
     flex-direction: column;
-    gap: 1em;
     justify-content: space-between;
 }
 
@@ -422,6 +423,7 @@ a {
     background-color: $secondary-color;
     border-radius: 0.4em;
     color: white;
+    margin-bottom: 1em;
     transition: 0.3s;
 }
 
@@ -437,7 +439,7 @@ a {
     padding: 0.4em;
     display: inline-block;
     background-color: transparent;
-    text-align: center;
+    text-align-last: center;
     cursor: pointer;
     border: none;
     border-bottom: 0.2em solid $secondary-color;
@@ -445,6 +447,7 @@ a {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    margin-bottom: 1em;
 }
 
 .notes-container-btns input[type=text] {
@@ -498,7 +501,7 @@ a {
 .notes-list-item-info {
     color: black;
     line-height: $page-line-height;
-    background-image: -moz-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
     -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
     -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
     background-size: 100% $page-line-height;
@@ -560,12 +563,13 @@ a {
     list-style-type: none;
     display: flex;
     justify-content: center;
-    gap: 0.5em;
     width: 100%;
 }
 
 .pagination > li {
     display: inline-block;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
 }
 
 .pagination .pagination-btn {
@@ -573,7 +577,7 @@ a {
     border: none;
     text-align: center;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.9em;
     background-color: $secondary-color;
     min-width: 2.5em;
     min-height: 2.5em;
@@ -612,10 +616,12 @@ a {
     .notes-container-btns .create-note-btn {
         width: max-content;
         flex: 0 0 30%;
+        margin-bottom: 0;
     }
 
     .notes-container-btns .order-menu {
         flex: 0 0 30%;
+        margin-bottom: 0;
     }
     
     .notes-container-btns input[type=text] {
@@ -651,7 +657,6 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 1em;
 }
 
 .delete-modal-confirm {
@@ -663,6 +668,7 @@ a {
     font-size: 1em;
     border-radius: 0.4em;
     transition: 0.3s;
+    margin-bottom: 1em;
 }
 
 .delete-modal-confirm:hover {
@@ -703,6 +709,11 @@ a {
 
     .delete-modal-btns {
         flex-direction: row;
+    }
+
+    .delete-modal-confirm {
+        margin-bottom: 0;
+        margin-right: 1em;
     }
 }
 
