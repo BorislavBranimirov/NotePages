@@ -7,7 +7,7 @@ const userUtils = require('../utils/userUtils');
 router.route('/')
     .get(async (req, res, next) => {
         try {
-            const users = await User.find();
+            const users = await User.find({}, { 'password': 0 });
             return res.json(users);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for users' });
@@ -19,11 +19,11 @@ router.route('/')
             return res.status(422).json({ err: 'No username or password provided' });
         }
 
-        if(!userUtils.usernamePatternTest(req.body.username)) {
-            return res.status(422).json({err: 'Invalid username'});
+        if (!userUtils.usernamePatternTest(req.body.username)) {
+            return res.status(422).json({ err: 'Invalid username' });
         }
-        if(!userUtils.passwordPatternTest(req.body.password)) {
-            return res.status(422).json({err: 'Invalid password'});
+        if (!userUtils.passwordPatternTest(req.body.password)) {
+            return res.status(422).json({ err: 'Invalid password' });
         }
 
         try {
@@ -52,7 +52,7 @@ router.route('/')
 router.route('/:username')
     .get(async (req, res, next) => {
         try {
-            const user = await User.findOne({ username: req.params.username });
+            const user = await User.findOne({ username: req.params.username },  { 'password': 0 });
             return res.json(user);
         } catch (err) {
             return res.status(500).send({ err: 'An error occurred while searching for user' });
@@ -64,8 +64,8 @@ router.route('/:username')
             return res.status(422).json({ err: 'No password provided' });
         }
 
-        if(!userUtils.passwordPatternTest(req.body.password)) {
-            return res.status(422).json({err: 'Invalid password'});
+        if (!userUtils.passwordPatternTest(req.body.password)) {
+            return res.status(422).json({ err: 'Invalid password' });
         }
 
 
