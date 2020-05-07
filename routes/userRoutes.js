@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { User, Note } = require('../models');
 const userUtils = require('../utils/userUtils');
+const { verifyAccessToken } = require('../controllers/authController');
 
 router.route('/')
     .get(async (req, res, next) => {
@@ -58,7 +59,7 @@ router.route('/:username')
             return res.status(500).send({ err: 'An error occurred while searching for user' });
         }
     })
-    .patch(async (req, res, next) => {
+    .patch(verifyAccessToken, async (req, res, next) => {
         // password needs to be provided
         if (!req.body.password) {
             return res.status(422).json({ err: 'No password provided' });
@@ -68,6 +69,9 @@ router.route('/:username')
             return res.status(422).json({ err: 'Invalid password' });
         }
 
+        if (req.params.username !== res.locals.user.username) {
+            return res.status(401).json({ err: 'Unauthorized to edit this user' });
+        }
 
         try {
             const user = await User.findOne({ username: req.params.username });
@@ -92,7 +96,11 @@ router.route('/:username')
             return res.status(500).send({ err: 'An error occurred while updating user' });
         }
     })
-    .delete(async (req, res, next) => {
+    .delete(verifyAccessToken, async (req, res, next) => {
+        if (req.params.username !== res.locals.user.username) {
+            return res.status(401).json({ err: 'Unauthorized to delete this user' });
+        }
+
         try {
             const user = await User.findOneAndDelete({ username: req.params.username });
             if (!user) {
