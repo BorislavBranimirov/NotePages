@@ -22,6 +22,10 @@ body {
     background: $site-background-color;
 }
 
+input:focus, textarea:focus, select:focus, button:focus, a:focus{
+    outline: none;
+}
+
 #root {
     height: inherit;
 }
@@ -63,6 +67,10 @@ a {
 }
 
 .nav-item:not(.nav-username):hover:after {
+    transform: scaleX(1);
+}
+
+.nav-item:not(.nav-username):focus:after {
     transform: scaleX(1);
 }
 
