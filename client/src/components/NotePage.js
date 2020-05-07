@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
+import moment from 'moment';
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
@@ -49,10 +50,9 @@ const NotePage = (props) => {
     let header = <h2>Loading...</h2>;
     if (loaded) {
         if (note) {
-            console.log(note.createdAt)
             header = <React.Fragment>
                 <h2>{note.title}</h2>
-                <p>{Date(note.createdAt).toString()}</p>
+                <p>Date: {moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </React.Fragment>;
         } else {
             header = <h2 className="error">404</h2>;

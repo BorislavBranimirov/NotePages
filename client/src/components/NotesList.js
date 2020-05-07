@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
+import moment from 'moment';
 
 const NotesList = (props) => {
     const noteListItems = props.notes.map((note) =>
@@ -11,8 +12,8 @@ const NotesList = (props) => {
                 </div>
             </div>
             <div className="notes-list-item-info">
-                <p className="note-list-item-date">Created at:</p>
-                <p className="note-list-item-date">{Date(note.createdAt).toString()}</p>
+                <p className="note-list-item-date">Date:</p>
+                <p className="note-list-item-date">{moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </div>
             <div className="notes-list-item-btns">
                 <Link to={'/notes/' + note._id} className="notes-list-item-open-btn">Open</Link>
