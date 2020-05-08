@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 module.exports = {
     entry: path.join(__dirname, 'src', 'index.js'),
@@ -8,9 +9,12 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/dist/'
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: './public/index.html'
-      })],
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html'
+        }),
+        new MomentLocalesPlugin()
+    ],
     module: {
         rules: [
             {
