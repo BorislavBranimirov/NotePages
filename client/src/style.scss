@@ -74,7 +74,7 @@ a {
             transform: scaleX(1);
         }
 
-        &:not(.nav-username):focus:after {
+        &:not(.nav-username):active:after {
             transform: scaleX(1);
         }
     }
@@ -112,8 +112,8 @@ a {
         margin-bottom: 2em;
         color: white;
         background: rgb(66, 66, 66);
-        border-left: 4px solid black;
-        border-radius: 2px;
+        border-left: 0.3em solid black;
+        border-radius: 0.15em;
         word-wrap: break-word;
         white-space: pre-wrap;
     }
@@ -137,12 +137,12 @@ a {
             &[type=text], &[type=password] {
                 background-color: inherit;
                 border: none;
-                border-bottom: 3px solid rgb(204, 204, 204);
+                border-bottom: 0.2em solid rgb(204, 204, 204);
                 transition: 0.3s;
             }
     
             &[type=text]:focus, &[type=password]:focus {
-                border-bottom: 3px solid darken($color: rgb(204, 204, 204), $amount: 20);
+                border-bottom: 0.2em solid darken($color: rgb(204, 204, 204), $amount: 20);
             }
     
             &[type=submit] {
@@ -212,8 +212,9 @@ a {
             .note-edit-btn {
                 padding: 0.5em 2em;
                 margin-right: 1em;
-                border: 2px solid $secondary-color;
+                border: 0.15em solid $secondary-color;
                 border-radius: 0.4em;
+                font-size: 1em;
                 color: $secondary-color;
                 transition: 0.3s;
 
@@ -370,7 +371,7 @@ a {
             
             .note-form-cancel-btn {
                 padding: 0.5em 2.5em;
-                border: 2px solid $secondary-color;
+                border: 0.15em solid $secondary-color;
                 border-radius: 0.4em;
                 color: $secondary-color;
                 transition: 0.3s;
@@ -413,8 +414,8 @@ a {
         margin-bottom: 2em;
         color: white;
         background: rgb(66, 66, 66);
-        border-left: 4px solid black;
-        border-radius: 2px;
+        border-left: 0.3em solid black;
+        border-radius: 0.15em;
         word-wrap: break-word;
         white-space: pre-wrap;
     }
@@ -472,11 +473,11 @@ a {
             transition: 0.3s;
 
             &:hover {
-                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             }
 
             &:focus, &:active {
-                box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
             }
         }
     }
@@ -703,11 +704,11 @@ a {
                 transition: 0.3s;
 
                 &:hover {
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 }
 
                 &:focus, &:active {
-                    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
                 }
             }
         }
