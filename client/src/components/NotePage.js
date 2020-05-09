@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
 import moment from 'moment';
+import styles from './NotePage.module.scss';
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
@@ -55,38 +56,38 @@ const NotePage = (props) => {
                 <p>Date: {moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </React.Fragment>;
         } else {
-            header = <h2 className="error">404</h2>;
+            header = <h2 className={styles.error}>404</h2>;
         }
     }
 
     return (
-        <div className="note-page">
-            <div className="note-wrapper">
-                <div className="note-header">
-                    <div className="note-header-info">
+        <div className={styles.notePage}>
+            <div className={styles.noteWrapper}>
+                <div className={styles.noteHeader}>
+                    <div className={styles.noteHeaderInfo}>
                         {header}
                     </div>
                     {note && (
-                        <div className="note-header-btns">
+                        <div className={styles.noteHeaderBtns}>
                             <Link
                                 to={'/notes/' + props.match.params.id + '/edit'}
-                                className="note-edit-btn"
+                                className={styles.editBtn}
                             >Edit</Link>
                             <DeleteNoteBtn
                                 deleteId={props.match.params.id}
-                                className="note-delete-btn"
+                                className={styles.deleteBtn}
                             />
                         </div>
                     )}
                 </div>
-                <p className="note-body">
+                <p className={styles.noteBody}>
                     {note ? (
                         note.body
                     ) : (
                             errorMessage
                         )}
                 </p>
-                <div className="note-footer"></div>
+                <div className={styles.noteFooter}></div>
             </div>
         </div>
     );

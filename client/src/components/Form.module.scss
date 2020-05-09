@@ -1,0 +1,89 @@
+@import '../variables';
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+    height: 100%;
+    
+    form {
+        width: 100%;
+        
+        label:not(:first-child) {
+           display: block;
+            width: 100%;
+            margin-top: 2.5em;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            margin: 0.3em 0;
+            padding: 1em;
+            font-size: 1em;
+        
+            &[type=text], &[type=password] {
+                background-color: inherit;
+                border: none;
+                border-bottom: 0.2em solid rgb(204, 204, 204);
+                transition: 0.3s;
+            }
+        
+            &[type=text]:focus, &[type=password]:focus {
+                border-bottom: 0.2em solid darken($color: rgb(204, 204, 204), $amount: 20);
+            }
+            
+            &[type=submit] {
+                margin-top: 2.5em;
+                padding: 0.7em;
+                border: none;
+                border-radius: 0.3em;
+                background-color: $secondary-color;
+                color: white;
+                cursor: pointer;
+                font-size: inherit;
+                transition: 0.3s;
+        
+                &:hover {
+                    background-color: $secondary-color-lighten-1;
+                }
+            
+                &:focus, &:active {
+                    background-color: $secondary-color-lighten-2;
+                }
+            }
+        }
+    }
+}
+
+.formHeading {
+    margin-bottom: 1.5em;
+}
+
+.error {
+    display: block;
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 2em;
+    color: white;
+    background: rgb(66, 66, 66);
+    border-left: 0.3em solid black;
+    border-radius: 0.15em;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+
+@media (min-width: 900px) {
+    .error {
+        width: 50%;
+    }
+
+    .formWrapper {
+        form {
+            width: 50%;
+        }
+    }
+}

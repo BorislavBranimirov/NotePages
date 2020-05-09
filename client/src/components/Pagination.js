@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { updateQuery } from '../../utils/queryUtils';
+import styles from './Pagination.module.scss';
 
 function createPaginationListItems(currentPage, totalPages, onClick) {
     // keep the number odd, so that there are an equal number of buttons around current button
@@ -14,12 +15,14 @@ function createPaginationListItems(currentPage, totalPages, onClick) {
             if (pageBtns.length > 0 && i - lastValue > 1) {
                 pageBtns.push(
                     <li key={i + 'empty'}>
-                        <p className="pagination-empty">…</p>
+                        <p className={styles.paginationEmpty}>…</p>
                     </li>
                 );
             }
 
-            let btnClass = (i === currentPage) ? "pagination-btn pagination-btn-active" : "pagination-btn";
+            let btnClass = (i === currentPage) ?
+                `${styles.paginationBtn} ${styles.paginationBtnActive}` :
+                styles.paginationBtn;
             pageBtns.push(
                 <li key={i}>
                     <button className={btnClass} onClick={onClick} value={i}>
@@ -48,7 +51,11 @@ const Pagination = (props) => {
     if (props.totalPages.current === 0) {
         pageBtns.push(
             <li key="1">
-                <button className="pagination-btn pagination-btn-active" onClick={changePage} value={1}>
+                <button
+                    className={`${styles.paginationBtn} ${styles.paginationBtnActive}`}
+                    onClick={changePage}
+                    value={1}
+                >
                     {1}
                 </button>
             </li>
@@ -56,7 +63,7 @@ const Pagination = (props) => {
     }
 
     return (
-        <ul className="pagination">
+        <ul className={styles.pagination}>
             {pageBtns}
         </ul>
     );

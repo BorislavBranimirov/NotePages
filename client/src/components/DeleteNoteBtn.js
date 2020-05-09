@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
+import modalStyles from './DeleteModal.module.scss';
 
 const DeleteNoteBtn = (props) => {
     const [showModal, setShowModal] = useState(false);
@@ -55,14 +56,14 @@ const DeleteNoteBtn = (props) => {
     return (
         <React.Fragment>
             {showModal && (
-                <div className="delete-modal-wrapper">
-                    <div className="delete-modal" ref={wrapperRef}>
+                <div className={modalStyles.deleteModalWrapper}>
+                    <div className={modalStyles.deleteModal} ref={wrapperRef}>
                         <h2>Are you sure you want to delete the note?</h2>
-                        <div className="delete-modal-btns">
-                            <button className="delete-modal-confirm" onClick={handleClick}>
+                        <div className={modalStyles.deleteModalBtns}>
+                            <button className={modalStyles.deleteModalConfirm} onClick={handleClick}>
                                 Delete
                             </button>
-                            <button className="delete-modal-cancel" onClick={() => setShowModal(false)}>
+                            <button className={modalStyles.deleteModalCancel} onClick={() => setShowModal(false)}>
                                 Cancel
                             </button>
                         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
+import styles from './NoteForm.module.scss';
 
 const CreateNotePage = (props) => {
     const [title, setTitle] = useState('');
@@ -62,17 +63,18 @@ const CreateNotePage = (props) => {
     };
 
     return (
-        <div className="note-form-wrapper">
+        <div className={styles.formWrapper}>
             <form onSubmit={handleSubmit}>
-                <div className="note-form-header">
+                <div className={styles.formHeader}>
                     <h2>Create note</h2>
-                    <p className="error">{errorMessage}</p>
+                    <p className={styles.error}>{errorMessage}</p>
                     <textarea
                         type="text"
                         name="title"
                         id="title"
                         value={title}
                         onChange={handleChange}
+                        className={styles.formTitle}
                         autoFocus
                         required
                     />
@@ -82,14 +84,14 @@ const CreateNotePage = (props) => {
                     id="body"
                     value={body}
                     onChange={handleChange}
-                    className="note-form-body"
+                    className={styles.formBody}
                     required
                 />
-                <div className="note-form-footer">
-                    <input type="submit" value="Create" className="note-form-save-btn" />
+                <div className={styles.formFooter}>
+                    <input type="submit" value="Create" className={styles.saveBtn} />
                     <Link
                         to="notes"
-                        className="note-form-cancel-btn"
+                        className={styles.cancelBtn}
                     >Cancel</Link>
                 </div>
             </form>

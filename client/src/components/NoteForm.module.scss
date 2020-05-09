@@ -1,0 +1,119 @@
+@import '../variables';
+
+.formWrapper {
+    display: flex;
+    justify-content: center;
+
+    form {
+        width: 100%;
+    }
+}
+    
+
+.formHeader {
+    background-color: $note-color;
+    border-bottom: 0.15em solid $secondary-color;
+    padding: 1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    h2 {
+        text-align: center
+    }
+}
+
+
+.error {
+    text-align: center;
+}
+
+.formTitle {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5em;
+    width: 100%;
+    resize: none;
+    height: 0;
+}
+
+.formBody {
+    overflow: hidden;
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: $note-color;
+    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+    -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
+    -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
+    background-size: 100% $page-line-height;
+    padding-left: 3em;
+    padding-right: 1em;
+    font-size: 1em;
+    line-height: $page-line-height;
+    margin: 0;
+    border: none;
+    width: 100%;
+    resize: none;
+    height: $page-line-height;
+}
+        
+.formFooter {
+    position: relative;
+    background-color: $note-color;
+    padding: 1em;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+}
+
+.saveBtn {
+    padding: 0.6em 2.8em;
+    border: none;
+    cursor: pointer;
+    margin-right: 1em;
+    font-size: 1em;
+    background-color: $secondary-color;
+    border-radius: 0.4em;
+    color: white;
+    transition: 0.3s;
+
+    &:hover {
+        background-color: $secondary-color-lighten-1;
+    }
+
+    &:focus, &:active {
+        background-color: $secondary-color-lighten-2;
+    }
+}
+            
+.cancelBtn {
+    padding: 0.5em 2.5em;
+    border: 0.15em solid $secondary-color;
+    border-radius: 0.4em;
+    color: $secondary-color;
+    transition: 0.3s;
+
+    &:hover {
+        background-color: $note-color-lighten-1;
+    }
+
+    &:focus, &:active {
+        background-color: $note-color-lighten-2;
+    }
+}
+
+@media (min-width: 900px) {
+    .formWrapper {
+        form {
+            width: 50%;
+            margin-top: 2em;
+        }
+    }
+
+    .formHeader {
+        border-radius: 0.5em 0.5em 0 0;
+    }
+
+    .formFooter {
+        border-radius: 0 0 0.5em 0.5em;
+    }
+}

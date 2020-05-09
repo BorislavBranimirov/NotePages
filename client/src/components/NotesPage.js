@@ -4,6 +4,7 @@ import NotesList from './NotesList';
 import Pagination from './Pagination';
 import { checkTokenExpiry } from '../../utils/authUtils';
 import { updateQuery, getQueryObj } from '../../utils/queryUtils';
+import styles from './NotesPage.module.scss';
 
 async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPages) {
     try {
@@ -136,14 +137,14 @@ const NotesPage = (props) => {
     };
 
     return (
-        <div className="notes-container">
-            <div className="notes-container-btns">
-                <Link to="create-note" className="create-note-btn">Create a new note</Link>
+        <div className={styles.notesContainer}>
+            <div className={styles.notesContainerBtns}>
+                <Link to="create-note" className={styles.createNoteBtn}>Create a new note</Link>
                 <select
                     name="order-menu"
                     value={order}
                     onChange={handleChange}
-                    className="order-menu"
+                    className={styles.orderMenu}
                 >
                     <option value="name-asc">Name Ascending</option>
                     <option value="name-desc">Name Descending</option>
@@ -154,13 +155,13 @@ const NotesPage = (props) => {
                     type="text"
                     name="search-field"
                     id="search-field"
-                    className="search-field"
+                    className={styles.searchField}
                     placeholder="Search..."
                     value={search}
                     onChange={handleChange}
                 />
             </div>
-            {errorMessage && <div className="error">{errorMessage}</div>}
+            {errorMessage && <div className={styles.error}>{errorMessage}</div>}
             <NotesList notes={notes} deleteHandler={handleDelete} />
             <Pagination currentPage={page} totalPages={totalPages} />
         </div>

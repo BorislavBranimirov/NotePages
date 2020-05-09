@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../utils/userContext';
+import styles from './Form.module.scss';
 
 const LoginForm = (props) => {
     const [username, setUsername] = useState('');
@@ -62,9 +63,9 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div className="form-wrapper">
-            <h2 className="form-heading">Login</h2>
-            {errorMessage && <div className="error">{errorMessage}</div>}
+        <div className={styles.formWrapper}>
+            <h2 className={styles.formHeading}>Login</h2>
+            {errorMessage && <div className={styles.error}>{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
                 <input

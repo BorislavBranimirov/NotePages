@@ -37,10 +37,16 @@ module.exports = {
                             modules: {
                                 localIdentName: '[name]_[local]'
                             },
+                            importLoaders: 1,
                             sourceMap: true
                         }
                     },
-                    'sass-loader'
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
                 ]
             }
         ]

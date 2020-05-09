@@ -1,0 +1,9 @@
+$page-line-height: 2.5em;
+$page-underline-height: 0.1em;
+$site-background-color: rgb(233, 233, 233);
+$secondary-color: rgb(42, 49, 51);
+$secondary-color-lighten-1: rgb(72, 77, 78);
+$secondary-color-lighten-2: rgb(97, 102, 102);
+$note-color: rgb(226, 212, 186);
+$note-color-lighten-1: lighten($color: $note-color, $amount: 3%);
+$note-color-lighten-2: lighten($color: $note-color, $amount: 5%);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './Form.module.scss';
 
 const SignUpForm = (props) => {
     const [username, setUsername] = useState('');
@@ -59,9 +60,9 @@ const SignUpForm = (props) => {
     };
 
     return (
-        <div className="form-wrapper">
-            <h2 className="form-heading">Sign up</h2>
-            {errorMessage && <div className="error">{errorMessage}</div>}
+        <div className={styles.formWrapper}>
+            <h2 className={styles.formHeading}>Sign up</h2>
+            {errorMessage && <div className={styles.error}>{errorMessage}</div>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
                 <input

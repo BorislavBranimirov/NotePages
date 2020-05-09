@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { checkTokenExpiry } from '../../utils/authUtils';
+import styles from './NoteForm.module.scss';
 
 const EditNotePage = (props) => {
     const [title, setTitle] = useState('');
@@ -95,11 +96,11 @@ const EditNotePage = (props) => {
     };
 
     return (
-        <div className="note-form-wrapper">
+        <div className={styles.formWrapper}>
             <form onSubmit={handleSubmit}>
-                <div className="note-form-header">
+                <div className={styles.formHeader}>
                     <h2>Edit note <i className="fas fa-pencil-alt"></i></h2>
-                    <p className="error">{errorMessage}</p>
+                    <p className={styles.error}>{errorMessage}</p>
                     <textarea
                         type="text"
                         name="title"
@@ -107,6 +108,7 @@ const EditNotePage = (props) => {
                         value={title}
                         onChange={handleChange}
                         ref={titleRef}
+                        className={styles.formTitle}
                         required
                     />
                 </div>
@@ -115,15 +117,15 @@ const EditNotePage = (props) => {
                     id="body"
                     value={body}
                     onChange={handleChange}
-                    className="note-form-body"
+                    className={styles.formBody}
                     required
                 />
-                <div className="note-form-footer">
+                <div className={styles.formFooter}>
                     <React.Fragment>
-                        <input type="submit" value="Save" className="note-form-save-btn" />
+                        <input type="submit" value="Save" className={styles.saveBtn} />
                         <Link
                             to={'/notes/' + props.match.params.id}
-                            className="note-form-cancel-btn"
+                            className={styles.cancelBtn}
                         >Cancel</Link>
                     </React.Fragment>
                 </div>
