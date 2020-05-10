@@ -12,7 +12,7 @@
     "build-dev": "npm run build-dev --prefix client"
   },
   "author": "Borislav Branimirov",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",

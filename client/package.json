@@ -8,7 +8,7 @@
     "build-dev": "webpack --mode development"
   },
   "author": "Borislav Branimirov",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "moment": "^2.25.3",
