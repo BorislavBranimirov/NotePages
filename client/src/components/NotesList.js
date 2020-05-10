@@ -13,8 +13,8 @@ const NotesList = (props) => {
                 </div>
             </div>
             <div className={styles.info}>
-                <p className={styles.date}>Date:</p>
-                <p className={styles.date}>{moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
+                <p>Date:</p>
+                <p>{moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </div>
             <div className={styles.itemBtns}>
                 <Link to={'/notes/' + note._id} className={styles.openBtn}>Open</Link>

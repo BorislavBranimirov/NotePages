@@ -11,9 +11,7 @@
 }
 
 .noteHeader {
-    background-color: $note-color;
-    font-size: 20px;
-    border-bottom: 0.1em solid $secondary-color;
+    @include notebook-page-header-styling;
     padding: 1em;
     padding-left: 3em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -70,18 +68,8 @@
 }
 
 .noteBody {
-    font-size: 20px;
+    @include notebook-page-styling;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: $note-color;
-    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
-    -webkit-radial-gradient(1.5em, circle closest-side,$site-background-color 0.5em, transparent 0),
-    -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
-    background-size: 100% $page-line-height;
-    padding-left: 3em;
-    padding-right: 1em;
-    line-height: $page-line-height;
-    word-wrap: break-word;
-    white-space: pre-wrap;
 }
 
 .noteFooter {
