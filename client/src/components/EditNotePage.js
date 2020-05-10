@@ -37,6 +37,7 @@ const EditNotePage = (props) => {
 
                 setTitle(item.title);
                 setBody(item.body);
+                // adjust textarea height to be the maximum and not have scroll bars
                 const titleEl = document.getElementById('title');
                 titleEl.style.height = titleEl.scrollHeight + 'px';
 
@@ -63,6 +64,8 @@ const EditNotePage = (props) => {
                 setBody(event.target.value);
                 break;
         }
+        // adjust textarea height to be the maximum and not have scroll bars
+        // set to 0px before the change to address an issue with some browsers
         event.target.style.height = '0';
         event.target.style.height = event.target.scrollHeight + 'px';
     };
