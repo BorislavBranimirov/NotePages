@@ -12,7 +12,8 @@
 
 .noteHeader {
     background-color: $note-color;
-    border-bottom: 0.15em solid $secondary-color;
+    font-size: 20px;
+    border-bottom: 0.1em solid $secondary-color;
     padding: 1em;
     padding-left: 3em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -69,6 +70,7 @@
 }
 
 .noteBody {
+    font-size: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: $note-color;
     background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),

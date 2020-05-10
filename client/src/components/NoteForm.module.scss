@@ -12,18 +12,21 @@
 
 .formHeader {
     background-color: $note-color;
-    border-bottom: 0.15em solid $secondary-color;
+    font-size: 20px;
+    border-bottom: 0.1em solid $secondary-color;
     padding: 1em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
     h2 {
-        text-align: center
+        text-align: center;
+        margin-bottom: 0.3em;
     }
 }
 
 
 .error {
     text-align: center;
+    margin-bottom: 0.3em;
 }
 
 .formTitle {
@@ -37,6 +40,7 @@
 }
 
 .formBody {
+    font-size: 20px;
     overflow: hidden;
     display: block;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -47,7 +51,6 @@
     background-size: 100% $page-line-height;
     padding-left: 3em;
     padding-right: 1em;
-    font-size: 1em;
     line-height: $page-line-height;
     margin: 0;
     border: none;
