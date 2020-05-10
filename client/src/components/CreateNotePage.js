@@ -26,10 +26,22 @@ const CreateNotePage = (props) => {
                 setBody(event.target.value);
                 break;
         }
+
+        const oldScroll = document.documentElement.scrollTop;
         // adjust textarea height to be the maximum and not have scroll bars
         // set to 0px before the change to address an issue with some browsers
         event.target.style.height = '0';
         event.target.style.height = event.target.scrollHeight + 'px';
+
+        // if cursor is on the end of note body, scroll to bottom of page, so footer is visible
+        if (event.target.name === 'body' &&
+            (event.target.selectionStart === event.target.value.length)
+        ) {
+            window.scrollTo(0, document.body.scrollHeight);
+        } else {
+            // otherwise scroll to previous scroll height after changing textarea height
+            window.scrollTo(0, oldScroll);
+        }
     };
 
     const handleSubmit = async (event) => {
