@@ -80,7 +80,7 @@
 
 @media (min-width: 900px) {
     .noteWrapper {
-        width: 50%;
+        width: 70%;
         margin-top: 2em;
     }
 
@@ -90,5 +90,11 @@
 
     .noteFooter {
         border-radius: 0 0 0.5em 0.5em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .noteWrapper {
+        width: 50%;
     }
 }
