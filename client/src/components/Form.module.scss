@@ -28,11 +28,11 @@
                 background-color: inherit;
                 border: none;
                 border-bottom: 0.2em solid rgb(204, 204, 204);
-                transition: 0.3s;
+                transition: border-color 0.3s;
             }
         
             &[type=text]:focus, &[type=password]:focus {
-                border-bottom: 0.2em solid darken($color: rgb(204, 204, 204), $amount: 20);
+                border-color: darken($color: rgb(204, 204, 204), $amount: 20);
             }
             
             &[type=submit] {
