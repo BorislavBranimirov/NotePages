@@ -1,0 +1,42 @@
+@import '../variables';
+
+.homePageWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.homePage {
+    background-color: $note-color;
+    font-size: 1.25em;
+    padding: 2em;
+
+    h1 {
+        margin-bottom: 0.5em;
+    }
+
+    p {
+        margin-bottom: 1em;
+    }
+
+    a {
+        color: black;
+    }
+}
+
+@media (min-width: 900px) {
+    .homePageWrapper {
+        margin-top: 2em;
+    }
+
+    .homePage {
+        width: 70%;
+        border-radius: 0.5em;
+        margin-bottom: 2em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .homePage {
+        width: 50%;
+    }
+}
