@@ -17,7 +17,7 @@ const Home = () => {
                 Once done, you'll be sent to its page where you can read, edit or delete the note.
             </p>
             <p>Souce code:</p>
-            <a href="https://github.com/BorislavBranimirov/NotePages">
+            <a href="https://github.com/BorislavBranimirov/NotePages" target="_blank">
                 <i className="fab fa-github fa-2x"></i>
             </a>
             </div>
