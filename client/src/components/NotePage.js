@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
 import { checkTokenExpiry } from '../../utils/authUtils';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styles from './NotePage.module.scss';
+
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+dayjs.extend(advancedFormat);
 
 const NotePage = (props) => {
     const [note, setNote] = useState(null);
@@ -53,7 +56,7 @@ const NotePage = (props) => {
         if (note) {
             header = <React.Fragment>
                 <h2>{note.title}</h2>
-                <p>Date: {moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
+                <p>Date: {dayjs(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </React.Fragment>;
         } else {
             header = <h2 className={styles.error}>404</h2>;

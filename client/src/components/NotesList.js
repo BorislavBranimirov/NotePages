@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DeleteNoteBtn from './DeleteNoteBtn';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styles from './NotesList.module.scss';
+
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+dayjs.extend(advancedFormat);
 
 const NotesList = (props) => {
     const noteListItems = props.notes.map((note) =>
@@ -14,7 +17,7 @@ const NotesList = (props) => {
             </div>
             <div className={styles.info}>
                 <p>Date:</p>
-                <p>{moment(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
+                <p>{dayjs(note.createdAt).format('Do MMM YYYY, HH:mm:ss')}</p>
             </div>
             <div className={styles.itemBtns}>
                 <Link to={'/notes/' + note._id} className={styles.openBtn}>Open</Link>
