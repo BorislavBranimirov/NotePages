@@ -16,7 +16,7 @@ const Home = () => {
                 Press the create note button on the notes page to create a new note.
                 Once done, you'll be sent to its page where you can read, edit or delete the note.
             </p>
-            <p>Souce code:</p>
+            <p>Source code:</p>
             <a href="https://github.com/BorislavBranimirov/NotePages" target="_blank">
                 <i className="fab fa-github fa-2x"></i>
             </a>
