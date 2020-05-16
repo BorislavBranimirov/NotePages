@@ -36,3 +36,11 @@ input:focus, textarea:focus, select:focus, button:focus, a:focus{
 a {
     text-decoration: none;
 }
+
+.suspense-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+    height: 100%;
+}
