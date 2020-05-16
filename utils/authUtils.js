@@ -22,13 +22,15 @@ module.exports.addRefreshCookie = async (req, res, refreshToken) => {
     res.cookie('refreshToken', refreshToken, {
         expires: new Date(Date.now() + msUntilRefreshTokenExpiry),
         path: req.baseUrl + '/refresh-token',
-        httpOnly: true
+        httpOnly: true,
+        secure: true
     });
 };
 
 module.exports.clearRefreshCookie = (req, res) => {
     res.clearCookie('refreshToken', {
         path: req.baseUrl + '/refresh-token',
-        httpOnly: true
+        httpOnly: true,
+        secure: true
     });
 };
