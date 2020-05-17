@@ -32,7 +32,7 @@ const App = () => {
                     <NavBar />
                     <Suspense fallback={
                         <div className="suspense-fallback">
-                            <i class="fas fa-spinner fa-pulse fa-4x"></i>
+                            <i className="fas fa-spinner fa-pulse fa-4x"></i>
                         </div>
                     }>
                         <Switch>
