@@ -26,7 +26,7 @@ npm run build
 npm run build-dev
 
 # Run the api server on port 8000 (by default) with live reloading
-npm run start-dev
+npm run server
 
 ```
 
