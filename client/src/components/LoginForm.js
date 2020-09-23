@@ -69,6 +69,7 @@ const LoginForm = (props) => {
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username</label>
                 <input
+                    id="username"
                     type="text"
                     name="username"
                     pattern="[a-zA-Z0-9]{6,25}"
@@ -79,6 +80,7 @@ const LoginForm = (props) => {
                 />
                 <label htmlFor="password">Password</label>
                 <input
+                    id="password"
                     type="password"
                     name="password"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,72}"
