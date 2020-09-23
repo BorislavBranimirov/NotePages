@@ -1,4 +1,4 @@
-// function that check if access token is expired and renews it if it can
+// function that checks if access token is expired and renews it if it can
 // returns true and deletes token info from client if access token can't be used
 // or if access token is expired and refresh token is missing or invalid
 // otherwise return false
