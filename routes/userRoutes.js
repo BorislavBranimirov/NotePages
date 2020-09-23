@@ -11,7 +11,7 @@ router.route('/')
             const users = await User.find({}, { 'password': 0 });
             return res.json(users);
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while searching for users' });
+            return res.status(500).json({ err: 'An error occurred while searching for users' });
         }
     })
     .post(async (req, res, next) => {
@@ -46,7 +46,7 @@ router.route('/')
                 username: user.username
             });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while creating user' });
+            return res.status(500).json({ err: 'An error occurred while creating user' });
         }
     });
 
@@ -56,7 +56,7 @@ router.route('/:username')
             const user = await User.findOne({ username: req.params.username },  { 'password': 0 });
             return res.json(user);
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while searching for user' });
+            return res.status(500).json({ err: 'An error occurred while searching for user' });
         }
     })
     .patch(verifyAccessToken, async (req, res, next) => {
@@ -76,12 +76,12 @@ router.route('/:username')
         try {
             const user = await User.findOne({ username: req.params.username });
             if (!user) {
-                return res.status(404).send({ err: 'User not found' });
+                return res.status(404).json({ err: 'User not found' });
             }
 
             // use user's comparePassword method to check if new password matches the current one
             if (await user.comparePassword(req.body.password)) {
-                return res.status(422).send({ err: 'This is already your current password' });
+                return res.status(422).json({ err: 'This is already your current password' });
             }
 
             user.password = req.body.password;
@@ -93,7 +93,7 @@ router.route('/:username')
                 username: patchedUser.username
             });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while updating user' });
+            return res.status(500).json({ err: 'An error occurred while updating user' });
         }
     })
     .delete(verifyAccessToken, async (req, res, next) => {
@@ -104,17 +104,17 @@ router.route('/:username')
         try {
             const user = await User.findOneAndDelete({ username: req.params.username });
             if (!user) {
-                return res.status(404).send({ err: 'User not found' });
+                return res.status(404).json({ err: 'User not found' });
             }
 
             // delete all note record with the author's id
             await Note.deleteMany({ authorId: user._id }).catch((err) => {
-                return res.status(500).send({ err: 'An erroor occurred while deleting user notes' });
+                return res.status(500).json({ err: 'An erroor occurred while deleting user notes' });
             });
 
             return res.json({ success: true });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while deleting user' });
+            return res.status(500).json({ err: 'An error occurred while deleting user' });
         }
     });
 

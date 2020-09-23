@@ -35,7 +35,7 @@ router.route('/')
 
             return res.json({count, page, limit, notes});
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while searching for notes' });
+            return res.status(500).json({ err: 'An error occurred while searching for notes' });
         }
     })
     .post(verifyAccessToken, async (req, res, next) => {
@@ -58,7 +58,7 @@ router.route('/')
                 id: note._id
             });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while creating note' });
+            return res.status(500).json({ err: 'An error occurred while creating note' });
         }
     });
 
@@ -74,7 +74,7 @@ router.route('/:id')
 
             return res.json(note);
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while searching for note' });
+            return res.status(500).json({ err: 'An error occurred while searching for note' });
         }
     })
     .patch(verifyAccessToken, async (req, res, next) => {
@@ -86,7 +86,7 @@ router.route('/:id')
         try {
             const note = await Note.findById(req.params.id);
             if (!note) {
-                return res.status(404).send({ err: 'Note not found' });
+                return res.status(404).json({ err: 'Note not found' });
             }
 
             if (note.authorId.toString() !== res.locals.user.id) {
@@ -98,7 +98,7 @@ router.route('/:id')
             if ((req.body.title === note.title && !req.body.body) ||
                 (req.body.body === note.body && !req.body.title) ||
                 (req.body.body === note.body && req.body.title === note.title)) {
-                return res.status(422).send({ err: 'No changes from original note were provided' });
+                return res.status(422).json({ err: 'No changes from original note were provided' });
             }
 
             note.title = req.body.title || note.title;
@@ -110,14 +110,14 @@ router.route('/:id')
                 id: patchedNote._id
             });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while updating note' });
+            return res.status(500).json({ err: 'An error occurred while updating note' });
         }
     })
     .delete(verifyAccessToken, async (req, res, next) => {
         try {
             const note = await Note.findByIdAndDelete(req.params.id);
             if (!note) {
-                return res.status(404).send({ err: 'Note not found' });
+                return res.status(404).json({ err: 'Note not found' });
             }
             if (note.authorId.toString() !== res.locals.user.id) {
                 return res.status(401).json({ err: 'Unauthorized to delete this note' });
@@ -125,7 +125,7 @@ router.route('/:id')
 
             return res.json({ success: true });
         } catch (err) {
-            return res.status(500).send({ err: 'An error occurred while deleting note' });
+            return res.status(500).json({ err: 'An error occurred while deleting note' });
         }
     });
 
