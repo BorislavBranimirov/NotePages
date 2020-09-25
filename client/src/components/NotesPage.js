@@ -41,7 +41,7 @@ async function fetchNotes(url, props, setNotes, setErrorMessage, page, totalPage
 }
 
 // default order;
-let _defaultOrder = 'date-asc';
+let _defaultOrder = 'date-desc';
 
 const NotesPage = (props) => {
     const [notes, setNotes] = useState([]);

@@ -7,7 +7,7 @@ const { Note } = require('../models');
 router.route('/')
     .get(verifyAccessToken, async (req, res, next) => {
         const regex = new RegExp(req.query.search, 'i');
-        let orderObj = { createdAt: 1 };
+        let orderObj = { createdAt: -1 };
         let limit = parseInt(req.query.limit, 10) || 25;
         let page = parseInt(req.query.page, 10) || 1;
         switch (req.query.order) {
