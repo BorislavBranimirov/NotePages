@@ -52,53 +52,10 @@ const NotesPage = (props) => {
     const history = useHistory();
     let page = useRef(null);
     let totalPages = useRef(null);
-    // if changing the search value should cause its useEffect hook to rerender
+    // whether changing the search value should cause its useEffect hook to execute
     const shouldRenderSearch = useRef(false);
-    // if changing the order value should cause its useEffect hook to rerender
+    // whether changing the order value should cause its useEffect hook to execute
     const shouldRenderOrder = useRef(false);
-
-    const handleChange = (event) => {
-        switch (event.target.name) {
-            case 'order-menu':
-                setOrder(event.target.value);
-                break;
-            case 'search-field':
-                setSearch(event.target.value);
-                break;
-        }
-    }
-
-    // fetch new notes everytime query changes or on initialisation
-    useEffect(() => {
-        const queryObj = getQueryObj();
-        // if on change of query, search parameter is set but search input field doesn't have the same value
-        // or has no value, update it, and don't cause its useEffect hook to fire again
-        if (queryObj.search && queryObj.search !== search) {
-            shouldRenderSearch.current = false;
-            setSearch(queryObj.search);
-        }
-        // if no search param, but search input field has text, remove it
-        // used for when going backward from to a page with a search param to a page without, for example
-        if (!queryObj.search && search !== '') {
-            shouldRenderSearch.current = false;
-            setSearch('');
-        }
-
-        // if on change of query, order parameter is set but order menu doesn't have the same value
-        // or has no value, update it, and don't cause its useEffect hook to fire again
-        if (queryObj.order && queryObj.order !== order) {
-            shouldRenderOrder.current = false;
-            setOrder(queryObj.order);
-        }
-        // if no order param, but order menu doesn't have the default selected, change it
-        // used for when going backward from to a page with an order param to a page without, for example
-        if (!queryObj.order && order !== _defaultOrder) {
-            shouldRenderOrder.current = false;
-            setOrder(_defaultOrder);
-        }
-
-        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
-    }, [location.search]);
 
     // fetch notes every time order value changes
     useEffect(() => {
@@ -123,6 +80,52 @@ const NotesPage = (props) => {
         const newQuery = updateQuery({ 'search': search, 'page': 1 });
         history.push('/notes' + newQuery);
     }, [search]);
+
+    // fetch new notes everytime query changes or on initialisation
+    useEffect(() => {
+        const queryObj = getQueryObj();
+        // if on change of query, search parameter is set but search input field doesn't have the same value
+        // or has no value, update it, and don't cause its useEffect hook to fire again
+        if (queryObj.search && queryObj.search !== search) {
+            shouldRenderSearch.current = false;
+            setSearch(queryObj.search);
+        }
+        // if there is no search parameter, but search input field has text, remove it
+        // used for when going backwards from to a page with a search param to a page without, for example
+        if (!queryObj.search && search !== '') {
+            shouldRenderSearch.current = false;
+            setSearch('');
+        }
+
+        // if on change of query, order parameter is set but order menu doesn't have the same value
+        // or has no value, update it, and don't cause its useEffect hook to fire again
+        if (queryObj.order && queryObj.order !== order) {
+            shouldRenderOrder.current = false;
+            setOrder(queryObj.order);
+        }
+        // if there is no order parameter, but order menu doesn't have the default selected, change it
+        // used for when going backwards from to a page with an order param to a page without, for example
+        if (!queryObj.order && order !== _defaultOrder) {
+            shouldRenderOrder.current = false;
+            setOrder(_defaultOrder);
+        }
+
+        fetchNotes('/api/notes' + location.search, props, setNotes, setErrorMessage, page, totalPages);
+
+        // reset scroll to top of page
+        window.scrollTo(0, 0);
+    }, [location.search]);
+
+    const handleChange = (event) => {
+        switch (event.target.name) {
+            case 'order-menu':
+                setOrder(event.target.value);
+                break;
+            case 'search-field':
+                setSearch(event.target.value);
+                break;
+        }
+    }
 
     const handleDelete = () => {
         // if deleting the last note on the last page, make the previous page current when fetching
