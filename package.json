@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "start-dev": "concurrently \"nodemon server.js\" \"npm start --prefix client\"",
-    "start-no-dev-server": "npm run build && cross-env NODE_ENV=production nodemon server.js",
+    "dev": "concurrently \"nodemon server.js\" \"npm start --prefix client\"",
+    "prod": "npm run build && cross-env NODE_ENV=production nodemon server.js",
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "build": "npm run build --prefix client",
