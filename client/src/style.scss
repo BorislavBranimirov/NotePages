@@ -2,46 +2,50 @@
 @import './variables';
 
 * {
-    box-sizing: border-box;
-    font-family: 'Montserrat', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    height: 100vh;
-    background: $site-background-color;
-    font-size: 16px;
+  height: 100vh;
+  background: $site-background-color;
+  font-size: 16px;
 }
 
 @media (min-width: 900px) {
-    body {
-        font-size: 18px;
-    }
+  body {
+    font-size: 18px;
+  }
 }
 
-input:focus, textarea:focus, select:focus, button:focus, a:focus{
-    outline: none;
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+a:focus {
+  outline: none;
 }
 
 #root {
-    height: inherit;
+  height: inherit;
 }
 
 #root > div {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .suspense-fallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1em;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
+  height: 100%;
 }

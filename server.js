@@ -21,13 +21,10 @@ app.use(morgan('tiny'));
 
 // set up mongoose
 const db = process.env.MONGO_URI;
-mongoose.connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('MongoDB connected...'))
-    .catch((err) => console.log(err));
+mongoose
+  .connect(db)
+  .then(() => console.log('MongoDB connected...'))
+  .catch((err) => console.log(err));
 
 // routing
 const { noteRouter, userRouter, authRouter } = require('./routes');
@@ -37,15 +34,15 @@ app.use('/api/auth', authRouter);
 
 // serving react app
 if (process.env.NODE_ENV === 'production') {
-    app.use('/dist', express.static(path.join(__dirname, 'client', 'dist')));
+  app.use('/dist', express.static(path.join(__dirname, 'client', 'dist')));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-    });
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  });
 }
 
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+  console.log(`Server started on port ${port}`);
 });

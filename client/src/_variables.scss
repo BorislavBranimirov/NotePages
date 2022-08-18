@@ -1,37 +1,39 @@
 $page-line-height: 2.5em;
-$page-underline-height: 0.1em;
+$page-underline-height: 0.13em;
 $site-background-color: rgb(233, 233, 233);
 $secondary-color: rgb(42, 49, 51);
 $secondary-color-lighten-1: rgb(72, 77, 78);
 $secondary-color-lighten-2: rgb(97, 102, 102);
 $note-color: rgb(226, 212, 186);
-$note-color-lighten-1: lighten($color: $note-color, $amount: 3%);
-$note-color-lighten-2: lighten($color: $note-color, $amount: 5%);
+$note-color-lighten-1: lighten(
+  $color: $note-color,
+  $amount: 3%,
+);
+$note-color-lighten-2: lighten(
+  $color: $note-color,
+  $amount: 5%,
+);
 
 @mixin notebook-page-styling {
-    /* font-size specified due to linear-gradient causing uneven lines and blurriness depeding on font-size,
-    zoom level and different browser rendering */
-    font-size: 16px;
-    color: black;
-    line-height: $page-line-height;
-    background-color: $note-color;
-    background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
-    -webkit-radial-gradient(1.5em, circle closest-side, $site-background-color 0.5em, transparent 0),
-    -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
-    background-size: 100% $page-line-height;
-    padding-left: 3em;
-    padding-right: 1em;
-    word-wrap: break-word;
-    white-space: pre-wrap;
+  /* font-size specified due to linear-gradient causing uneven lines and blurriness depeding on font-size,
+  zoom level and different browser rendering */
+  font-size: 16px;
+  color: black;
+  line-height: $page-line-height;
+  background-color: $note-color;
+  background-image: -webkit-linear-gradient(top, transparent $page-line-height - $page-underline-height, $secondary-color 0),
+  -webkit-radial-gradient(1.5em, circle closest-side, $site-background-color 0.5em, transparent 0),
+  -webkit-radial-gradient(1.45em 1.18em, circle closest-corner, black, rgba(0, 0, 0, 0.2) 0.5em, transparent 0);
+  background-size: 100% $page-line-height;
+  padding-left: 3em;
+  padding-right: 1em;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* font-size specified for compatibility reasons with notebook-page-styling */
 @mixin notebook-page-header-styling {
-    font-size: 16px;
-    border-bottom: 0.1em solid $secondary-color;
-    background-color: $note-color;
-
-    @supports (-moz-appearance:none) {
-        border-bottom: 0.13em solid $secondary-color;
-    }
+  font-size: 16px;
+  border-bottom: 0.13em solid $secondary-color;
+  background-color: $note-color;
 }

@@ -1,45 +1,46 @@
 @import '../variables';
 
 .pagination {
-    margin-top: 2em;
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  margin-top: 2em;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 
-    li {
-        display: inline-block;
-        margin-left: 0.2em;
-        margin-right: 0.2em;
-    }
+  li {
+    display: inline-block;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+  }
 }
 
 .paginationBtn {
-    padding: 0.6em 1em;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-    font-size: 0.9em;
-    background-color: $secondary-color;
-    min-width: 2.5em;
-    min-height: 2.5em;
-    border-radius: 0.5em;
-    color: white;
-    transition: 0.3s;
+  padding: 0.6em 1em;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9em;
+  background-color: $secondary-color;
+  min-width: 2.5em;
+  min-height: 2.5em;
+  border-radius: 0.5em;
+  color: white;
+  transition: 0.3s;
 
-    &:hover {
-        background-color: $secondary-color-lighten-2;
-    }
+  &:hover {
+    background-color: $secondary-color-lighten-2;
+  }
 
-    &:focus, &:active {
-        background-color: $secondary-color-lighten-1;
-    }
+  &:focus,
+  &:active {
+    background-color: $secondary-color-lighten-1;
+  }
 }
 
 .paginationBtnActive {
-    background-color: $secondary-color-lighten-1;
+  background-color: $secondary-color-lighten-1;
 }
 
 .paginationEmpty {
-    padding: 0.6em;
+  padding: 0.6em;
 }
